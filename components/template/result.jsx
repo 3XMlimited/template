@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import InputForm from "@/components/shared/InputForm";
 import ImageForm from "@/components/shared/ImageForm";
 import TextAreaForm from "@/components/shared/TextAreaForm";
-
+import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
 import Chart from "@/components/chart.js";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,28 @@ const Result = ({
   questions,
   isLoading,
 }) => {
+  const [nextStep, setNextStep] = useState(false);
+
+  console.log(template);
+  async function fetchCheck() {
+    if (
+      template.question_for_link !== "" &&
+      template.domains !== "" &&
+      template.button_link !== "" &&
+      template.content !== "" &&
+      template.image !== "" &&
+      template.imageBase64 !== ""
+    ) {
+      setNextStep(true);
+      // setStep(2);
+    } else {
+      setNextStep(false);
+    }
+  }
+  useEffect(() => {
+    fetchCheck();
+  }, [template]);
+
   return (
     <div className="space-y-6  ">
       <div>
@@ -102,13 +124,27 @@ const Result = ({
           >
             Back
           </Button>
-          <Button
+          {/* <Button
             className="w-[120px]"
             onClick={fetchGenerate}
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Generate"}
-          </Button>
+          </Button>  */}
+
+          <div className={`w-full  flex justify-end ${detail && "hidden"}`}>
+            {nextStep ? (
+              <Button
+                className="w-[120px]"
+                onClick={fetchGenerate}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Generate"}
+              </Button>
+            ) : (
+              <AlertDialogDemo />
+            )}
+          </div>
         </div>
       )}
     </div>

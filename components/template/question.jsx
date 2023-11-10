@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from "react";
 import InputListForm from "@/components/shared/InputListForm";
+import AlertDialogDemo from "@/components/shared/AlertDialog";
 import TextAreaForm from "@/components/shared/TextAreaForm";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
 const Question = ({ template, set_template, setStep, detail }) => {
+  const [nextStep, setNextStep] = useState(false);
+
+  async function fetchCheck() {
+    if (
+      template.categories.filter((i) => i !== "").length > 0 &&
+      template.question_list.length > 0
+    ) {
+      setNextStep(true);
+      // setStep(2);
+    } else {
+      setNextStep(false);
+    }
+  }
+  useEffect(() => {
+    fetchCheck();
+  }, [template]);
+
   return (
     <div className="space-y-6 ">
       <div>
@@ -105,7 +123,22 @@ const Question = ({ template, set_template, setStep, detail }) => {
         >
           Back
         </Button>
-        <Button
+
+        {nextStep ? (
+          <Button
+            className="w-[120px]"
+            onClick={() => {
+              setStep(3);
+              window.scrollTo(0, 0);
+            }}
+          >
+            Next
+          </Button>
+        ) : (
+          <AlertDialogDemo className="w-[120px] " />
+        )}
+
+        {/* <Button
           className="w-[120px] "
           onClick={() => {
             setStep(3);
@@ -113,7 +146,7 @@ const Question = ({ template, set_template, setStep, detail }) => {
           }}
         >
           Next
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
