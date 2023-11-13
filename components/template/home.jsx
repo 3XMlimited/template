@@ -28,7 +28,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
   const fetchConvertKit = async () => {
     const response = await fetch("/api/convertkit", {
       method: "GET",
-      timeout: "30000",
+      timeout: 30000,
       headers: {
         "Content-Type": "application/json",
       },
