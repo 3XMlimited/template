@@ -20,6 +20,7 @@ export default function Home() {
     setIsLoading(true);
     const response = await fetch("/api/get", {
       method: "GET",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,6 +41,7 @@ export default function Home() {
     setIsLoading(true);
     const response = await fetch("/api/new", {
       method: "DELETE",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,6 +64,7 @@ export default function Home() {
     console.log(data);
     const response = await fetch("/api/new", {
       method: "POST",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },

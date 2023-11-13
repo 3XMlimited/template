@@ -47,6 +47,7 @@ const page = () => {
     setIsLoading(true);
     const response = await fetch(`/api/get`, {
       method: "POST",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },
@@ -103,6 +104,7 @@ const page = () => {
 
     const response = await fetch("/api/new", {
       method: "PATCH",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },

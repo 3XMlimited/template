@@ -7,6 +7,7 @@ export const GET = async (req) => {
         }),
       {
         method: "GET",
+        timeout: "30000",
         headers: {
           "Content-Type": "application/json",
         },

@@ -46,6 +46,7 @@ const page = () => {
     console.log(r_template);
     const response = await fetch("/api/new", {
       method: "POST",
+      timeout: "30000",
       headers: {
         "Content-Type": "application/json",
       },
