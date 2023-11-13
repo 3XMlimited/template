@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputForm from "@/components/shared/InputForm";
+import InputListForm from "@/components/shared/InputListForm";
 import ImageForm from "@/components/shared/ImageForm";
 import TextAreaForm from "@/components/shared/TextAreaForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
@@ -21,7 +22,6 @@ const Result = ({
   async function fetchCheck() {
     if (
       template.question_for_link !== "" &&
-      template.domains !== "" &&
       template.button_link !== "" &&
       template.content !== "" &&
       template.image !== "" &&
@@ -52,8 +52,8 @@ const Result = ({
           <ImageForm
             template={template}
             set_template={set_template}
-            width={200}
-            height={200}
+            width={300}
+            height={300}
           />
           <h1 style={{ fontSize: "2.1rem" }}>
             Congratulations on Completing the Quiz!
@@ -95,18 +95,65 @@ const Result = ({
               value={template}
               setValue={set_template}
             />
-            <div className="max-lg:w-[300px]">
-              <TextAreaForm
-                title={`Domain List`}
-                name={"domains"}
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full gap-4 ">
+        {template.domains.map((c, i) => (
+          <div className=" space-y-6  " key={i}>
+            {/* step 1 context */}
+            <div className="flex w-full  flex-row space-x-2   ">
+              <InputListForm
+                title={`domains${i + 1}`}
+                name="domains"
                 value={template}
-                placeholder={"Domain will split by ',' "}
+                style={{ width: "300px" }}
+                index={i}
+                setValue={set_template}
+              />
+
+              <InputListForm
+                title={`domains url ${i + 1}`}
+                name="domains_url"
+                index={i}
+                value={template}
+                style={{ width: "500px" }}
                 setValue={set_template}
               />
             </div>
           </div>
-        </div>
+        ))}
       </div>
+      <div className="w-full flex justify-end max-lg:w-screen max-lg:justify-center space-x-2 ">
+        <Button
+          className="w-[160px]  "
+          variant={"outline"}
+          onClick={() =>
+            set_template((prev) => ({
+              ...prev,
+              domains: [...Array(6)],
+              domains_url: [...Array(6)],
+            }))
+          }
+        >
+          Clear
+        </Button>
+        <Button
+          className="w-[160px] "
+          variant={"outline"}
+          onClick={() =>
+            set_template((prev) => ({
+              ...prev,
+              domains: [...template.domains, ""],
+              domains_url: [...template.domains_url, ""],
+            }))
+          }
+        >
+          Add one more
+        </Button>
+      </div>
+
       {detail ? (
         <div className={`w-full  flex justify-end `}>
           <Button className="w-[120px]" onClick={fetchGenerate}>
@@ -124,13 +171,6 @@ const Result = ({
           >
             Back
           </Button>
-          {/* <Button
-            className="w-[120px]"
-            onClick={fetchGenerate}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Generate"}
-          </Button>  */}
 
           <div className={`w-full  flex justify-end ${detail && "hidden"}`}>
             {nextStep ? (

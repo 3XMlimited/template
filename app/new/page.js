@@ -14,6 +14,7 @@ const page = () => {
   const [h_template, setH_template] = useState({
     topic: "",
     forms: "",
+    pixel_id: "",
     headline: "",
     content: "",
     image: "",
@@ -32,7 +33,8 @@ const page = () => {
     question_for_link: "",
     content: "",
     button_link: "",
-    domains: [],
+    domains: ["", "", "", "", "", ""],
+    domains_url: ["", "", "", "", "", ""],
     image: "",
     imageBase64: "",
   });
@@ -54,6 +56,7 @@ const page = () => {
         data: {
           topic: h_template.topic,
           forms: h_template.forms,
+          pixel_id: h_template.pixel_id,
           headline: h_template.headline,
           content: h_template.content.replace("↵", ""),
           image: h_template.imageBase64,
@@ -62,7 +65,8 @@ const page = () => {
           question_list: q_template.question_list,
           question_for_link: r_template.question_for_link,
           button_link: r_template.button_link,
-          domains: r_template.domains.replace("↵", "").split(","),
+          domains: r_template.domains,
+          domains_url: r_template.domains_url,
           logo: r_template.imageBase64,
           thankyou_content: r_template.content,
           state: true,
@@ -115,6 +119,7 @@ const page = () => {
 };
 
 export default page;
+
 // Do you want to study in a country where English is the primary language spoken ?,
 // Is studying in a big city important to you ?,
 // Do you want to study at a university with a prestigious reputation for academics ?,

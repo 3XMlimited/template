@@ -10,6 +10,10 @@ const TemplateSchema = new Schema(
       type: String,
       required: [true, "Forms is required."],
     },
+    pixel_id: {
+      type: String,
+      required: [true, "Pixel is required."],
+    },
     headline: {
       type: String,
       required: [true, "Headline is required."],
@@ -47,6 +51,10 @@ const TemplateSchema = new Schema(
     domains: {
       type: Array,
       required: [true, "domains is required."],
+    },
+    domains_url: {
+      type: Array,
+      required: [true, "domains url is required."],
     },
     logo: {
       type: String,

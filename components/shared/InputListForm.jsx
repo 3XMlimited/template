@@ -29,11 +29,12 @@ const InputListForm = ({
 
     for (let i = 0; i < array.length; i++) {
       if (i === index) {
-        if (array.includes(v) && v !== "" && title !== "score") {
-          array[i] = v + "_copy";
-        } else {
-          array[i] = v;
-        }
+        array[i] = v.replace("↵", "");
+        // if (array.includes(v) && v !== "" && title !== "score") {
+        //   array[i] = v + "_copy" + index;
+        // } else {
+        // array[i] = v.replace("↵", "");
+        // }
       }
     }
 
@@ -41,7 +42,7 @@ const InputListForm = ({
   }
 
   return (
-    <div className="grid w-full max-w-sm items-center gap-1.5 ">
+    <div className=" w-full items-center gap-1.5 ">
       <Label htmlFor={name}>{title}</Label>
       <Input
         // type="string"

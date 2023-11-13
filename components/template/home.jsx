@@ -47,6 +47,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
       template.content !== "" &&
       template.forms !== "" &&
       template.headline !== "" &&
+      template.pixel_id !== "" &&
       template.image !== "" &&
       template.imageBase64 !== "" &&
       template.topic !== ""
@@ -69,15 +70,17 @@ const Home = ({ template, set_template, setStep, detail }) => {
             This is how others will see you on the site.
           </p>
         </div>
-        <div className="mt-5 flex justify-end space-x-4">
+        <div className=" flex justify-end space-x-4">
           <InputForm
             title={"Topic"}
             name={"topic"}
             placeholder={" esquiz.com/{topic} "}
             value={template}
             setValue={set_template}
+            className="items-start"
           />
           {/* <FormLabel>Language</FormLabel> */}
+
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -117,6 +120,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
               </Command>
             </PopoverContent>
           </Popover>
+
           {/* <FormDescription>
             This is the language that will be used in the dashboard.
           </FormDescription>
@@ -129,6 +133,16 @@ const Home = ({ template, set_template, setStep, detail }) => {
             value={template}
             setValue={set_template}
           /> */}
+        </div>
+        <div className=" mt-5 col-span-2 flex justify-end space-x-4">
+          <InputForm
+            // title={"Pixel ID"}
+            name={"pixel_id"}
+            placeholder={"Facebook Pixel ID "}
+            value={template}
+            setValue={set_template}
+            style={{ width: "w-[700px]" }}
+          />
         </div>
       </div>
 

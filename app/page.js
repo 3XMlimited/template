@@ -95,7 +95,7 @@ export default function Home() {
               Right click the logo to displays a actions
             </h6>
           </div>
-          <div className="grid  grid-cols-4">
+          <div className="grid  grid-cols-4 gap-20">
             {data?.map((d, i) => (
               <ContextMenu key={i}>
                 <ContextMenuTrigger>
