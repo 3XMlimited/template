@@ -99,13 +99,13 @@ export default function Home() {
                   <div className="w-[220px] h-[220px] hover:bg-slate-100 relative bg-slate-50 rounded-lg">
                     <Link href={`/${d._id}`}>
                       <div className="w-full h-full  flex justify-center items-center">
-                        <Image
+                        {/* <Image
                           src={d.image}
                           width={200}
                           height={200}
                           alt="image"
                           className="w-[200px] h-[200px]  content-center "
-                        />
+                        /> */}
                       </div>
                     </Link>
 

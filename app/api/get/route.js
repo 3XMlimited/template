@@ -21,10 +21,8 @@ export const GET = async (req) => {
     await connectToDB();
 
     let newTemplate = await Templates.find({});
-    // let array = [];
-    // newTemplate.map((r) =>
-    //   array.push({ _id: r._id, topic: r.topic, image: r.image })
-    // );
+    let array = [];
+    newTemplate.map((r) => array.push({ _id: r._id, topic: r.topic }));
 
     return new Response(JSON.stringify(newTemplate), { status: 201 });
   } catch (error) {
