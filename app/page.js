@@ -89,7 +89,7 @@ export default function Home() {
           <div className="flex-col">
             <h1 className="font-bold text-[40px]">Dashboard</h1>
             <h6 className="text-slate-400">
-              Right click the logo to displays a actions{" "}
+              Right click the logo to displays a actions
             </h6>
           </div>
           <div className="grid  grid-cols-4">
