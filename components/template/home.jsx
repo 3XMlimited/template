@@ -34,7 +34,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
     });
 
     const data = await response.json();
-    console.log("forms", data);
+    // console.log("forms", data);
     setForms(data.forms);
   };
   useEffect(() => {
