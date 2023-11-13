@@ -19,8 +19,9 @@ export const POST = async (req) => {
 export const GET = async (req) => {
   try {
     await connectToDB();
+    const projection = { _id: 1, topic: 1 };
+    let newTemplate = await Templates.find().select(projection);
 
-    let newTemplate = await Templates.find({});
     let array = [];
     newTemplate.map((r) => array.push({ _id: r._id, topic: r.topic }));
 

@@ -57,7 +57,7 @@ export default function Home() {
   };
 
   const fetchClone = async (data) => {
-    console.log(data);
+    // console.log(data);
     setIsLoading(true);
     delete data._id;
     data.topic = data.topic + "_copy";
