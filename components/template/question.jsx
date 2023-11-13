@@ -35,7 +35,7 @@ const Question = ({ template, set_template, setStep, detail }) => {
       <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-1 ">
         {/* LEFT */}
         {template.categories.map((c, i) => (
-          <div className="flex flex-row space-x-2">
+          <div className="flex flex-row space-x-2" key={i}>
             <div className="space-y-6">
               {/* step 1 context */}
 
@@ -93,9 +93,9 @@ const Question = ({ template, set_template, setStep, detail }) => {
       <div>
         <>
           {template.categories.map(
-            (c) =>
+            (c, i) =>
               c !== "" && (
-                <div className="flex-col ">
+                <div className="flex-col " key={i}>
                   <h3 className="text-[30px] text-[#131313]  m-4 bg-slate-50 w-[200px] flex justify-center rounded-xl border">
                     {c}
                   </h3>

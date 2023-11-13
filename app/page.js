@@ -25,8 +25,10 @@ export default function Home() {
       },
     });
     const result = await response.json();
-    console.log(result);
-    setData(result);
+    // console.log(result);
+    setData(
+      result.sort((a, b) => new Date(b.updatedAt) > new Date(a.updatedAt))
+    );
     setIsLoading(false);
   }
 
@@ -91,8 +93,8 @@ export default function Home() {
             </h6>
           </div>
           <div className="grid  grid-cols-4">
-            {data?.map((d) => (
-              <ContextMenu>
+            {data?.map((d, i) => (
+              <ContextMenu key={i}>
                 <ContextMenuTrigger>
                   <div className="w-[220px] h-[220px] hover:bg-slate-100 relative bg-slate-50 rounded-lg">
                     <Link href={`/${d._id}`}>
