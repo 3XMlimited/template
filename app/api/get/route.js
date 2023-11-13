@@ -24,7 +24,7 @@ export const GET = async (req) => {
     let array = [];
     newTemplate.map((r) => array.push({ _id: r._id, topic: r.topic }));
 
-    return new Response(JSON.stringify(newTemplate), { status: 201 });
+    return new Response(JSON.stringify(array), { status: 201 });
   } catch (error) {
     console.log(error);
     return new Response("Failed to create a new post", { status: 500 });
