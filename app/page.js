@@ -28,10 +28,7 @@ export default function Home() {
     const result = await response.json();
 
     setData(
-      result.sort(
-        (a, b) =>
-          new Date(b.updatedAt).getTime() > new Date(a.updatedAt).getTime()
-      )
+      result.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     );
     setIsLoading(false);
   }

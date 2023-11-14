@@ -19,12 +19,17 @@ export const POST = async (req) => {
 export const GET = async (req) => {
   try {
     await connectToDB();
-    const projection = { _id: 1, topic: 1, image: 1 };
+    const projection = { _id: 1, topic: 1, image: 1, updatedAt: 1 };
     let newTemplate = await Templates.find().select(projection);
 
     let array = [];
     newTemplate.map((r) =>
-      array.push({ _id: r._id, topic: r.topic, image: r.image })
+      array.push({
+        _id: r._id,
+        topic: r.topic,
+        image: r.image,
+        updatedAt: r.updatedAt,
+      })
     );
 
     return new Response(JSON.stringify(array), { status: 201 });
