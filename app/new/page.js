@@ -44,7 +44,8 @@ const page = () => {
   const fetchGenerate = async () => {
     setIsLoading(true);
 
-    q_template.question_list = await filterOutTheList(q_template.question_list);
+    console.log("questionlist:", q_template);
+    // q_template.question_list = await filterOutTheList(q_template.question_list);
 
     const response = await fetch("/api/new", {
       method: "POST",

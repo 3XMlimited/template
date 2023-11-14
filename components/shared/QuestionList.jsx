@@ -10,14 +10,6 @@ import SheetRight from "@/components/shared/Sheet";
 function QuestionList({ category, list, template, set_template }) {
   const [edit, setEdit] = useState(false);
 
-  const fetchSave = () => {
-    setEdit(false);
-  };
-
-  const fetchDelete = () => {
-    setEdit(false);
-  };
-  console.log(list);
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
@@ -54,10 +46,6 @@ function QuestionList({ category, list, template, set_template }) {
                     question={l.value.question}
                     score={l.value.score}
                   />
-                  //   <Pencil
-                  //     className="text-purple-500"
-                  //     onClick={() => setEdit(true)}
-                  //   />
                 )}
               </div>
             </AccordionContent>

@@ -61,21 +61,26 @@ export default function Home() {
     setIsLoading(true);
     delete data._id;
     data.topic = data.topic + "_copy";
-    console.log(data);
-    const response = await fetch("/api/new", {
-      method: "POST",
-      timeout: 30000,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data,
-      }),
-    });
 
-    const result = await response.json();
-    console.log(result);
-    await fetchData();
+    try {
+      const response = await fetch("/api/new", {
+        method: "POST",
+        timeout: 30000,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data,
+        }),
+      });
+
+      const result = await response.json();
+
+      await fetchData();
+    } catch (error) {
+      console.log(error);
+      push("/");
+    }
     // push("/");
   };
   console.log(data);

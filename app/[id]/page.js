@@ -106,7 +106,8 @@ const page = () => {
 
   const fetchGenerate = async () => {
     setIsLoading(true);
-    q_template.question_list = await filterOutTheList(q_template.question_list);
+    console.log("questionlist:", q_template);
+    // q_template.question_list = await filterOutTheList(q_template.question_list);
     // console.log(h_template);
     // console.log(q_template);
     // console.log(r_template);
