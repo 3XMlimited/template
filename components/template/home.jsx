@@ -72,13 +72,14 @@ const Home = ({ template, set_template, setStep, detail }) => {
         </div>
         <div className=" flex justify-end space-x-4">
           <InputForm
-            title={"Topic"}
+            title={"Pathname"}
             name={"topic"}
-            placeholder={" esquiz.com/{topic} "}
+            placeholder={"{topic}"}
             value={template}
             setValue={set_template}
             className="items-start"
           />
+
           {/* <FormLabel>Language</FormLabel> */}
 
           <Popover open={open} onOpenChange={setOpen}>

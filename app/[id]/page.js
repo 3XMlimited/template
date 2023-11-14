@@ -37,6 +37,8 @@ const page = () => {
   // result template
   const [r_template, setR_template] = useState({
     question_for_link: "",
+    question_for_content: "",
+    button_name: "",
     button_link: "",
     content: "",
     domains: [],
@@ -89,7 +91,9 @@ const page = () => {
 
       setR_template({
         question_for_link: data[0].question_for_link,
+        question_content: data[0].question_content,
         button_link: data[0].button_link,
+        button_name: data[0].button_name,
         domains: data[0].domains,
         domains_url: data[0].domains_url,
         logo: data[0].logo,
@@ -125,7 +129,9 @@ const page = () => {
           scores: q_template.score,
           question_list: q_template.question_list,
           question_for_link: r_template.question_for_link,
+          question_content: r_template.question_content,
           button_link: r_template.button_link,
+          button_name: r_template.button_name,
           domains: r_template.domains,
           domains_url: r_template.domains_url,
           logo: r_template.logoBase64,

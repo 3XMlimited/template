@@ -24,14 +24,16 @@ const page = () => {
   // question template
   const [q_template, setQ_template] = useState({
     categories: ["", "", "", "", "", ""],
-    score: [1, 1, 1, 1, 1, 1],
+
     question_list: [],
   });
 
   // result template
   const [r_template, setR_template] = useState({
     question_for_link: "",
+    question_content: "",
     content: "",
+    button_name: "Get Started",
     button_link: "",
     domains: ["", "", "", "", "", ""],
     domains_url: ["", "", "", "", "", ""],
@@ -41,11 +43,9 @@ const page = () => {
 
   const fetchGenerate = async () => {
     setIsLoading(true);
-    console.log(h_template);
-    q_template.question_list = await filterOutTheList(q_template.question_list);
-    console.log(q_template);
 
-    console.log(r_template);
+    q_template.question_list = await filterOutTheList(q_template.question_list);
+
     const response = await fetch("/api/new", {
       method: "POST",
       timeout: 30000,
@@ -64,7 +64,9 @@ const page = () => {
           scores: q_template.score,
           question_list: q_template.question_list,
           question_for_link: r_template.question_for_link,
+          question_content: r_template.content,
           button_link: r_template.button_link,
+          button_name: r_template.button_name,
           domains: r_template.domains,
           domains_url: r_template.domains_url,
           logo: r_template.logoBase64,

@@ -2,6 +2,7 @@ import React from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "../ui/button";
 
 const InputForm = ({
   title,
@@ -21,24 +22,31 @@ const InputForm = ({
       <Label
         htmlFor={name}
         className={`${
-          (title === "Topic" || title === "Form") &&
+          (title === "Pathname" || title === "Form") &&
           "text-primary-500 font-bold text-[30px]"
         }`}
       >
         {title}
       </Label>
-      <Input
-        // type="string"
-        id={index}
-        placeholder={placeholder}
-        style={style}
-        value={
-          Array.isArray(value[`${name}`])
-            ? value[`${name}`][index]
-            : value[`${name}`]
-        }
-        onChange={(e) => arraySetValue(e.target.value)}
-      />
+
+      <div className="flex ">
+        {title === "Pathname" && (
+          <Button variant="secondary">esquiz.com/</Button>
+        )}
+        <Input
+          // type="string"
+          id={index}
+          placeholder={placeholder}
+          style={style}
+          value={
+            Array.isArray(value[`${name}`])
+              ? value[`${name}`][index]
+              : value[`${name}`]
+          }
+          onChange={(e) => arraySetValue(e.target.value)}
+        />
+      </div>
+
       {/* <Separator /> */}
     </div>
   );

@@ -3,10 +3,12 @@ import InputForm from "@/components/shared/InputForm";
 import InputListForm from "@/components/shared/InputListForm";
 import LogoForm from "@/components/shared/LogoForm";
 import TextAreaForm from "@/components/shared/TextAreaForm";
+import PopoverButton from "@/components/shared/PopoverButton";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
 import Chart from "@/components/chart.js";
 import { Button } from "@/components/ui/button";
+import { ArrowBigLeftDash } from "lucide-react";
 const Result = ({
   template,
   set_template,
@@ -80,25 +82,33 @@ const Result = ({
       </div>
       <Separator />
       {/* link  */}
-      <div className=" space-y-6 ">
-        <div className="w-full ">
-          <div className=" flex-col space-y-6   max-lg:w-[300px] ">
-            <InputForm
-              title={"Questions for link"}
-              name={"question_for_link"}
-              value={template}
-              setValue={set_template}
-              style={{ width: "100vh" }}
-            />
-            <InputForm
-              title={"Button link"}
-              name={"button_link"}
-              placeholder={"Button link"}
-              style={{ backgroundColor: "rgb(73,193,240)", width: "100vh" }}
-              value={template}
-              setValue={set_template}
-            />
-          </div>
+
+      <div className=" flex-col space-y-6  w-full   ">
+        <InputForm
+          title={"Questions headline"}
+          name={"question_for_link"}
+          value={template}
+          setValue={set_template}
+          style={{ width: "100vh" }}
+        />
+
+        <InputForm
+          title={"Questions content"}
+          name={"question_content"}
+          value={template}
+          setValue={set_template}
+          style={{ width: "100vh" }}
+        />
+      </div>
+      <div className="flex justify-center mr-[40px] space-x-2 ">
+        <PopoverButton
+          name={template.button_name}
+          value={template}
+          setValue={set_template}
+        />
+        <div className="mt-[13px] flex  text-slate-500">
+          <ArrowBigLeftDash />
+          <p> Click me !</p>
         </div>
       </div>
 

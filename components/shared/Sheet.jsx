@@ -146,7 +146,7 @@ function SheetRight({
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="score" className="text-left">
-              Score
+              Yes Score
             </Label>
             <Input
               id="score"

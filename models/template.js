@@ -44,6 +44,15 @@ const TemplateSchema = new Schema(
       type: String,
       required: [true, "question_for_link is required."],
     },
+    question_content: {
+      type: String,
+      required: [true, "question_content is required."],
+    },
+    button_name: {
+      type: String,
+      required: [true, "button_link is required."],
+    },
+
     button_link: {
       type: String,
       required: [true, "button_link is required."],
