@@ -27,6 +27,9 @@ const Result = ({
     if (
       template.question_for_link !== "" &&
       template.button_link !== "" &&
+      template.button_name !== "" &&
+      template.content !== "" &&
+      template.question_content !== "" &&
       template.content !== "" &&
       template.logo !== "" &&
       template.logoBase64 !== ""

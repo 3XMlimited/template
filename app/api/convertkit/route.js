@@ -15,7 +15,7 @@ export const GET = async (req) => {
       }
     );
     const result = await response.json();
-    console.log(result);
+    // console.log(result);
     return new Response(JSON.stringify(result), { status: 201 });
   } catch (error) {
     console.log(error);

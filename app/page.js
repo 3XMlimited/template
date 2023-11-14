@@ -61,6 +61,7 @@ export default function Home() {
     setIsLoading(true);
     delete data._id;
     data.topic = data.topic + "_copy";
+    // data.state = true;
 
     try {
       const response = await fetch("/api/new", {
@@ -75,15 +76,14 @@ export default function Home() {
       });
 
       const result = await response.json();
-
-      await fetchData();
     } catch (error) {
       console.log(error);
-      push("/");
+      // push("/");
     }
+    await fetchData();
     // push("/");
   };
-  console.log(data);
+  // console.log(data);
   return (
     <main className="space-y-6">
       {isLoading ? (
