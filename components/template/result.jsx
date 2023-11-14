@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputForm from "@/components/shared/InputForm";
 import InputListForm from "@/components/shared/InputListForm";
-import ImageForm from "@/components/shared/ImageForm";
+import LogoForm from "@/components/shared/LogoForm";
 import TextAreaForm from "@/components/shared/TextAreaForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
@@ -15,17 +15,19 @@ const Result = ({
   detail,
   questions,
   isLoading,
+  id,
 }) => {
   const [nextStep, setNextStep] = useState(false);
 
   console.log(template);
+
   async function fetchCheck() {
     if (
       template.question_for_link !== "" &&
       template.button_link !== "" &&
       template.content !== "" &&
-      template.image !== "" &&
-      template.imageBase64 !== ""
+      template.logo !== "" &&
+      template.logoBase64 !== ""
     ) {
       setNextStep(true);
       // setStep(2);
@@ -49,11 +51,12 @@ const Result = ({
       <div className="grid grid-cols-2 gap-4  max-lg:grid-cols-1  ">
         {/* LEFT */}
         <div className="space-y-6 flex-col ">
-          <ImageForm
+          <LogoForm
             template={template}
             set_template={set_template}
             width={300}
             height={300}
+            name={"logo"}
           />
           <h1 style={{ fontSize: "2.1rem" }}>
             Congratulations on Completing the Quiz!
@@ -154,39 +157,31 @@ const Result = ({
         </Button>
       </div>
 
-      {detail ? (
-        <div className={`w-full  flex justify-end `}>
-          <Button className="w-[120px]" onClick={fetchGenerate}>
-            Update
-          </Button>
-        </div>
-      ) : (
-        <div className={`w-full  flex justify-between ${detail && "hidden"}`}>
-          <Button
-            className="w-[120px]"
-            onClick={() => {
-              setStep(2);
-              window.scrollTo(0, 0);
-            }}
-          >
-            Back
-          </Button>
+      <div className={`w-full  flex justify-between ${detail && "hidden"}`}>
+        <Button
+          className="w-[120px]"
+          onClick={() => {
+            setStep(2);
+            window.scrollTo(0, 0);
+          }}
+        >
+          Back
+        </Button>
 
-          <div className={`w-full  flex justify-end ${detail && "hidden"}`}>
-            {nextStep ? (
-              <Button
-                className="w-[120px]"
-                onClick={fetchGenerate}
-                disabled={isLoading}
-              >
-                {isLoading ? "Loading..." : "Generate"}
-              </Button>
-            ) : (
-              <AlertDialogDemo />
-            )}
-          </div>
+        <div className={`w-full  flex justify-end ${detail && "hidden"}`}>
+          {nextStep ? (
+            <Button
+              className="w-[120px]"
+              onClick={fetchGenerate}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : id ? "Update" : "Generate"}
+            </Button>
+          ) : (
+            <AlertDialogDemo />
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

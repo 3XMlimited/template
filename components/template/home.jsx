@@ -136,7 +136,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
         </div>
         <div className=" mt-5 col-span-2 flex justify-end space-x-4">
           <InputForm
-            // title={"Pixel ID"}
+            title={"Pixel ID"}
             name={"pixel_id"}
             placeholder={"Facebook Pixel ID "}
             value={template}
@@ -188,6 +188,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
             set_template={set_template}
             width={500}
             height={500}
+            name={"image"}
           />
         </div>
       </div>

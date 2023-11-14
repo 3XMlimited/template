@@ -35,8 +35,8 @@ const page = () => {
     button_link: "",
     domains: ["", "", "", "", "", ""],
     domains_url: ["", "", "", "", "", ""],
-    image: "",
-    imageBase64: "",
+    logo: "",
+    logoBase64: "",
   });
 
   const fetchGenerate = async () => {
@@ -67,7 +67,7 @@ const page = () => {
           button_link: r_template.button_link,
           domains: r_template.domains,
           domains_url: r_template.domains_url,
-          logo: r_template.imageBase64,
+          logo: r_template.logoBase64,
           thankyou_content: r_template.content,
           state: true,
         },
@@ -80,7 +80,11 @@ const page = () => {
     push("/");
     // redirect("/");
   };
-
+  console.log(
+    "questions",
+    q_template.categories?.filter((r) => r !== "")
+  );
+  console.log("question_list", q_template?.question_list);
   return (
     <div className="flex-col">
       {/* Step 1: */}

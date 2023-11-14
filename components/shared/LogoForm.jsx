@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const ImageForm = ({ template, set_template, width, height, name }) => {
+const LogoForm = ({ template, set_template, width, height, name }) => {
   const onImageChange = async (event) => {
     // console.log(name, template);
     if (event.target.files && event.target.files[0]) {
@@ -114,4 +114,4 @@ const ImageForm = ({ template, set_template, width, height, name }) => {
   );
 };
 
-export default ImageForm;
+export default LogoForm;

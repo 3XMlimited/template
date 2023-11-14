@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import InputListForm from "@/components/shared/InputListForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import TextAreaForm from "@/components/shared/TextAreaForm";
+import SheetRight from "@/components/shared/Sheet";
+import QuestionList from "@/components/shared/QuestionList";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
 const Question = ({ template, set_template, setStep, detail }) => {
   const [nextStep, setNextStep] = useState(false);
+  const [ql, setQL] = useState({});
 
   async function fetchCheck() {
     if (
@@ -23,8 +26,12 @@ const Question = ({ template, set_template, setStep, detail }) => {
     fetchCheck();
   }, [template]);
 
+  useEffect(() => {
+    setQL(Object.groupBy(template?.question_list, ({ category }) => category));
+  }, [template]);
+
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6 relative  ">
       <div>
         <h3 className="text-[40px] font-medium">Question Page</h3>
         <p className="text-sm text-muted-foreground">
@@ -33,23 +40,27 @@ const Question = ({ template, set_template, setStep, detail }) => {
       </div>
       <Separator />
       <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-1 ">
-        {/* LEFT */}
         {template.categories.map((c, i) => (
           <div className="flex flex-row space-x-2" key={i}>
-            <div className="space-y-6">
-              {/* step 1 context */}
-
-              <div className="flex-col w-full space-y-6 ">
-                <InputListForm
-                  title={`category${i + 1}`}
-                  name="categories"
-                  value={template}
-                  index={i}
-                  setValue={set_template}
-                />
-              </div>
+            <div className="flex space-x-2 w-full space-y-6 ">
+              <InputListForm
+                title={`category${i + 1}`}
+                name="categories"
+                value={template}
+                index={i}
+                setValue={set_template}
+              />
+              <SheetRight
+                title="Add Question"
+                width="200px"
+                name="question_list"
+                category={c}
+                value={template}
+                setValue={set_template}
+              />
             </div>
-            <div className="space-y-6">
+
+            {/* <div className="space-y-6">
               <div className="flex-col space-y-6 ">
                 <InputListForm
                   title="score"
@@ -60,7 +71,7 @@ const Question = ({ template, set_template, setStep, detail }) => {
                   setValue={set_template}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
@@ -78,7 +89,7 @@ const Question = ({ template, set_template, setStep, detail }) => {
           Clear
         </Button>
         <Button
-          className="w-[160px] "
+          className="w-[200px] "
           variant={"outline"}
           onClick={() =>
             set_template((prev) => ({
@@ -87,10 +98,10 @@ const Question = ({ template, set_template, setStep, detail }) => {
             }))
           }
         >
-          Add one more
+          Add new category
         </Button>
       </div>
-      <div>
+      {/* <div>
         <>
           {template.categories.map(
             (c, i) =>
@@ -99,7 +110,7 @@ const Question = ({ template, set_template, setStep, detail }) => {
                   <h3 className="text-[30px] text-[#131313]  m-4 bg-slate-50 w-[200px] flex justify-center rounded-xl border">
                     {c}
                   </h3>
-                  {/* <ArrowBigDown className="w-[200px] flex justify-center" /> */}
+                 
 
                   <TextAreaForm
                     title={"Question List"}
@@ -113,8 +124,17 @@ const Question = ({ template, set_template, setStep, detail }) => {
               )
           )}
         </>
-      </div>
-      <div className={`w-full  flex justify-between ${detail && "hidden"}`}>
+      </div> */}
+      <Separator />
+      {Object.keys(ql)?.map((q) => (
+        <QuestionList
+          category={q}
+          list={ql}
+          template={template}
+          set_template={set_template}
+        />
+      ))}
+      <div className={`w-full  flex justify-between ${detail && "hidden"}  `}>
         <Button
           className="w-[120px] "
           onClick={() => {

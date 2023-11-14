@@ -1,19 +1,32 @@
 import { connectToDB } from "@/utils/database";
+import { getCloudinary } from "@/utils/uploadImage";
 import Templates from "@/models/template";
-
+// import { v2 as cloudinary } from "cloudinary";
 export const POST = async (req) => {
+  // cloudinary.config({
+  //   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  //   api_key: process.env.CLOUDINARY_API_KEY,
+  //   api_secret: process.env.CLOUDINARY_API_SECRET,
+  // });
+
+  // const res = await cloudinary.uploader.upload(url, {
+  //   public_id: "olympic_flag",
+  // });
+  //
+
   const { data } = await req.json();
 
   try {
     await connectToDB();
-
+    const image = await getCloudinary(data.image);
+    const logo = await getCloudinary(data.image);
     const newTemplate = new Templates({
       topic: data.topic,
       forms: data.forms,
       headline: data.headline,
       pixel_id: data.pixel_id,
       content: data.content,
-      image: data.image,
+      image,
       categories: data.categories,
       scores: data.scores,
       question_list: data.question_list,
@@ -22,7 +35,7 @@ export const POST = async (req) => {
       domains: data.domains,
       domains_url: data.domains_url,
       thankyou_content: data.thankyou_content,
-      logo: data.logo,
+      logo,
       state: data.state,
     });
     await newTemplate.save();
@@ -40,13 +53,16 @@ export const PATCH = async (req) => {
   try {
     await connectToDB();
     const deleteTemplate = await Templates.deleteOne({ _id: data.id });
+    const image = await getCloudinary(data.image);
+    const logo = await getCloudinary(data.image);
+
     const newTemplate = new Templates({
       topic: data.topic,
       forms: data.forms,
       pixel_id: data.pixel_id,
       headline: data.headline,
       content: data.content,
-      image: data.image,
+      image,
       categories: data.categories,
       scores: data.scores,
       question_list: data.question_list,
@@ -54,7 +70,7 @@ export const PATCH = async (req) => {
       button_link: data.button_link,
       domains: data.domains,
       domains_url: data.domains_url,
-      logo: data.logo,
+      logo,
       thankyou_content: data.thankyou_content,
       state: data.state,
     });

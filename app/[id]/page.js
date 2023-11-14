@@ -12,6 +12,7 @@ import Link from "next/link";
 import { filterOutTheList } from "@/utils/utils";
 const page = () => {
   const { push } = useRouter();
+  const [step, setStep] = useState(1);
   const id = usePathname().split("/")[1];
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,8 +41,8 @@ const page = () => {
     content: "",
     domains: [],
     domains_url: [],
-    image: "",
-    imageBase64: "",
+    logo: "",
+    logoBase64: "",
     content: "",
   });
 
@@ -64,7 +65,6 @@ const page = () => {
     // setIsLoading(false);
   }
 
-  console.log(isLoading);
   useEffect(() => {
     fetchData();
     // setIsLoading(false);
@@ -92,8 +92,8 @@ const page = () => {
         button_link: data[0].button_link,
         domains: data[0].domains,
         domains_url: data[0].domains_url,
-        image: data[0].logo,
-        imageBase64: data[0].logo,
+        logo: data[0].logo,
+        logoBase64: data[0].logo,
         content: data[0].thankyou_content,
       });
       setIsLoading(false);
@@ -101,10 +101,11 @@ const page = () => {
   }, [data]);
 
   const fetchGenerate = async () => {
+    setIsLoading(true);
     q_template.question_list = await filterOutTheList(q_template.question_list);
-    console.log(h_template);
-    console.log(q_template);
-    console.log(r_template);
+    // console.log(h_template);
+    // console.log(q_template);
+    // console.log(r_template);
 
     const response = await fetch("/api/new", {
       method: "PATCH",
@@ -127,7 +128,7 @@ const page = () => {
           button_link: r_template.button_link,
           domains: r_template.domains,
           domains_url: r_template.domains_url,
-          logo: r_template.imageBase64,
+          logo: r_template.logoBase64,
           state: true,
           thankyou_content: r_template.content,
           id,
@@ -136,7 +137,8 @@ const page = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+
+    setIsLoading(false);
     push("/");
   };
 
@@ -151,29 +153,59 @@ const page = () => {
         </div>
       ) : (
         // <Progress value={33} />
+
         <div className="flex-col space-y-6">
           <Button className="">
             <Link href="/"> {"<-Back"}</Link>
           </Button>
-          <Home
+
+          {/* Step 1: */}
+          {step === 1 && (
+            <Home
+              template={h_template}
+              set_template={setH_template}
+              setStep={setStep}
+            />
+          )}
+          {/* <Home
             template={h_template}
             set_template={setH_template}
-            detail={true}
-          />
+            // detail={true}
+          /> */}
 
-          <Question
+          {step === 2 && (
+            <Question
+              template={q_template}
+              set_template={setQ_template}
+              setStep={setStep}
+              // detail={true}
+            />
+          )}
+          {/* <Question
             template={q_template}
             set_template={setQ_template}
-            detail={true}
-          />
+            // detail={true}
+          /> */}
 
-          <Result
+          {step === 3 && (
+            <Result
+              template={r_template}
+              set_template={setR_template}
+              fetchGenerate={fetchGenerate}
+              setStep={setStep}
+              // detail={true}
+              questions={q_template}
+              isLoading={isLoading}
+              id={true}
+            />
+          )}
+          {/* <Result
             template={r_template}
             set_template={setR_template}
             fetchGenerate={fetchGenerate}
-            detail={true}
+            // detail={true}
             questions={q_template}
-          />
+          /> */}
         </div>
       )}
     </>
@@ -181,6 +213,7 @@ const page = () => {
 };
 
 export default page;
+
 // Do you want to study in a country where English is the primary language spoken ?,
 // Is studying in a big city important to you ?,
 // Do you want to study at a university with a prestigious reputation for academics ?,
