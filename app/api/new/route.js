@@ -19,7 +19,7 @@ export const POST = async (req) => {
   try {
     await connectToDB();
     const image = await getCloudinary(data.image);
-    const logo = await getCloudinary(data.image);
+    const logo = await getCloudinary(data.logo);
     const newTemplate = new Templates({
       topic: data.topic,
       forms: data.forms,
@@ -56,7 +56,7 @@ export const PATCH = async (req) => {
     await connectToDB();
     const deleteTemplate = await Templates.deleteOne({ _id: data.id });
     const image = await getCloudinary(data.image);
-    const logo = await getCloudinary(data.image);
+    const logo = await getCloudinary(data.logo);
 
     const newTemplate = new Templates({
       topic: data.topic,
