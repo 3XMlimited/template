@@ -129,6 +129,14 @@ export default function Home() {
                       Open in new tab
                     </Link>
                   </ContextMenuItem>
+                  <ContextMenuItem>
+                    <Link
+                      href={`https://esquiz.com/${d.topic}`}
+                      target="_blank"
+                    >
+                      Preview
+                    </Link>
+                  </ContextMenuItem>
                   <ContextMenuItem
                     className="text-purple-500"
                     onClick={() => fetchClone(d)}
