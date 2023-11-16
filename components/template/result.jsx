@@ -3,6 +3,7 @@ import InputForm from "@/components/shared/InputForm";
 import InputListForm from "@/components/shared/InputListForm";
 import LogoForm from "@/components/shared/LogoForm";
 import TextAreaForm from "@/components/shared/TextAreaForm";
+import Tiptap from "@/components/tiptap/Tiptap";
 import PopoverButton from "@/components/shared/PopoverButton";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
@@ -67,7 +68,14 @@ const Result = ({
             Congratulations on Completing the Quiz!
           </h1>
           <p>Your full report has been been generated</p>
-          <div className="max-lg:w-[300px]">
+
+          <div className="border p-2 rounded-md">
+            <p className="font-bold">Content</p>
+
+            <Tiptap name={"content"} value={template} setValue={set_template} />
+          </div>
+
+          {/* <div className="max-lg:w-[300px]">
             <TextAreaForm
               title={`Content`}
               name={"content"}
@@ -76,8 +84,9 @@ const Result = ({
                 "We are thrilled that you have taken the time to complete our quiz ...."
               }
               setValue={set_template}
+
             />
-          </div>
+          </div> */}
         </div>
         {/* RIGHT */}
 
@@ -95,13 +104,23 @@ const Result = ({
           style={{ width: "100vh" }}
         />
 
+        <div className="border p-2 rounded-md">
+          <p className="font-bold">Question Content</p>
+
+          <Tiptap
+            name={"question_content"}
+            value={template}
+            setValue={set_template}
+          />
+        </div>
+        {/* 
         <InputForm
           title={"Questions content"}
           name={"question_content"}
           value={template}
           setValue={set_template}
           style={{ width: "100vh" }}
-        />
+        /> */}
       </div>
       <div className="flex justify-center mr-[40px] space-x-2 ">
         <PopoverButton

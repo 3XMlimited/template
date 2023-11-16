@@ -5,6 +5,7 @@ import TextAreaForm from "@/components/shared/TextAreaForm";
 import ImageForm from "@/components/shared/ImageForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
+import Tiptap from "@/components/tiptap/Tiptap";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
@@ -186,13 +187,22 @@ const Home = ({ template, set_template, setStep, detail }) => {
               <h3 className={`   `}>Answer 'X' questions and we’ll get you </h3>
               <h3 className={`    `}>a personalised report </h3>
             </div>
+            <div className="border p-2 rounded-md">
+              <p className="font-bold">Content</p>
 
-            <TextAreaForm
+              <Tiptap
+                name={"content"}
+                value={template}
+                setValue={set_template}
+              />
+            </div>
+
+            {/* <TextAreaForm
               title={"Content"}
               name={"content"}
               value={template}
               setValue={set_template}
-            />
+            /> */}
             <Button className="h-16 bg-[#49C1F0] cursor-not-allowed hover:bg-[#49C1F0]">
               <div className="flex-col">
                 <p>Take The Scorecard</p>
