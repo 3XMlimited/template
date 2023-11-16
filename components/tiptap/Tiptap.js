@@ -45,7 +45,7 @@ const Tiptap = ({ name, value, setValue }) => {
       //   ListItem,
     ],
     content: `
-        <p>${value?.content}</p>
+        <p>${value[`${name}`]}</p>
       `,
     onUpdate({ editor }) {
       setValue((prev) => ({ ...prev, [`${name}`]: editor.getHTML() }));
