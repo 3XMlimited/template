@@ -22,6 +22,7 @@ import {
 
 const Home = ({ template, set_template, setStep, detail }) => {
   const [open, setOpen] = useState(false);
+  const [changeInput, setChangeInput] = useState(false);
   const [nextStep, setNextStep] = useState(false);
   const [forms, setForms] = useState([]);
 
@@ -35,7 +36,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
     });
 
     const data = await response.json();
-    // console.log("forms", data);
+    console.log("forms", data);
     setForms(data.forms);
   };
   useEffect(() => {
@@ -81,46 +82,56 @@ const Home = ({ template, set_template, setStep, detail }) => {
           />
 
           {/* <FormLabel>Language</FormLabel> */}
-
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                className={`
+          {changeInput ? (
+            <InputForm
+              title={"Form"}
+              name={"forms"}
+              placeholder={"Forms ID"}
+              value={template}
+              setValue={set_template}
+              className="items-start"
+            />
+          ) : (
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  className={`
                     w-[400px] justify-between  mt-[50px]
                    ${!template.forms && "text-muted-foreground"}
                   `}
-              >
-                {template.forms
-                  ? forms.find((form) => form.id === Number(template.forms))
-                      ?.name
-                  : "Select forms"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[400px] p-0 h-[400px] ">
-              <Command>
-                <CommandInput placeholder="Search forms..." />
-                <CommandEmpty>No Form found.</CommandEmpty>
-                <CommandGroup className="overflow-y-scroll">
-                  {forms?.map((form) => (
-                    <CommandItem
-                      value={Number(template.forms)}
-                      key={form.id}
-                      onSelect={() => {
-                        // console.log("form", form);
-                        set_template((prev) => ({ ...prev, forms: form.id }));
-                        // form.setValue("form", form.id);
-                      }}
-                    >
-                      {form.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                >
+                  {template.forms
+                    ? forms.find((form) => form.id === Number(template.forms))
+                        ?.name
+                    : "Select forms"}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[400px] p-0 h-[400px] ">
+                <Command>
+                  <CommandInput placeholder="Search forms..." />
+                  <CommandEmpty>No Form found.</CommandEmpty>
+                  <CommandGroup className="overflow-y-scroll">
+                    {forms?.map((form) => (
+                      <CommandItem
+                        value={Number(template.forms)}
+                        key={form.id}
+                        onSelect={() => {
+                          // console.log("form", form);
+                          set_template((prev) => ({ ...prev, forms: form.id }));
+                          // form.setValue("form", form.id);
+                        }}
+                      >
+                        {form.name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          )}
 
           {/* <FormDescription>
             This is the language that will be used in the dashboard.
@@ -134,6 +145,15 @@ const Home = ({ template, set_template, setStep, detail }) => {
             value={template}
             setValue={set_template}
           /> */}
+        </div>
+        <div className=" col-span-2 flex justify-end text-right ">
+          <Button
+            variant={"none"}
+            className="text-indigo-500 italic"
+            onClick={() => setChangeInput((prev) => !prev)}
+          >
+            {changeInput ? "Search by name" : "Can't not find?"}
+          </Button>
         </div>
         <div className=" mt-5 col-span-2 flex justify-end space-x-4">
           <InputForm
