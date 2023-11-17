@@ -63,6 +63,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
   useEffect(() => {
     fetchCheck();
   }, [template]);
+
   return (
     <div className="space-y-6 w-full">
       <div className="grid grid-cols-2 max-lg:grid-cols-1">
@@ -175,14 +176,24 @@ const Home = ({ template, set_template, setStep, detail }) => {
         <div className="space-y-6">
           {/* step 1 context */}
           <div className="flex-col w-full space-y-6 ">
-            <InputForm
+            {/* <InputForm
               title={"Headline"}
               style={{ width: "600px" }}
               name={"headline"}
               placeholder={"headline"}
               value={template}
               setValue={set_template}
-            />
+            /> */}
+            <div className="border p-2 rounded-md">
+              <p className="font-bold">Headline</p>
+
+              <Tiptap
+                name={"headline"}
+                value={template}
+                setValue={set_template}
+              />
+            </div>
+
             <div className="flex flex-col  text-[20px] text-gray-400">
               <h3 className={`   `}>Answer 'X' questions and we’ll get you </h3>
               <h3 className={`    `}>a personalised report </h3>

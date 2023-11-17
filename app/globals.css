@@ -3,16 +3,7 @@
 @tailwind utilities;
  
 
-.tiptap {
-  >*+* {
-    margin-top: 0.75em;
-  }
 
-  ul,
-  ol {
-    padding: 0 1rem;
-  }
-}
 @layer base {
   :root {
     --background: 0 0% 100%;
