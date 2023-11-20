@@ -23,6 +23,7 @@ export const POST = async (req) => {
     const newTemplate = new Templates({
       topic: data.topic,
       forms: data.forms,
+      language: data.language,
       headline: data.headline,
       pixel_id: data.pixel_id,
       content: data.content,
@@ -41,7 +42,6 @@ export const POST = async (req) => {
       state: data.state,
     });
     await newTemplate.save();
-    console.log("done");
     return new Response(JSON.stringify(newTemplate), { status: 201 });
   } catch (error) {
     console.log(error);
@@ -61,6 +61,7 @@ export const PATCH = async (req) => {
     const newTemplate = new Templates({
       topic: data.topic,
       forms: data.forms,
+      language: data.language,
       pixel_id: data.pixel_id,
       headline: data.headline,
       content: data.content,
@@ -79,7 +80,7 @@ export const PATCH = async (req) => {
       state: data.state,
     });
     await newTemplate.save();
-    console.log("done");
+
     return new Response(JSON.stringify(newTemplate), { status: 201 });
   } catch (error) {
     console.log(error);

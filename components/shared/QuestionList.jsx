@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Pencil, Delete, CheckSquare } from "lucide-react";
 import SheetRight from "@/components/shared/Sheet";
 function QuestionList({ category, list, template, set_template }) {
+  // edit question state
   const [edit, setEdit] = useState(false);
 
   return (

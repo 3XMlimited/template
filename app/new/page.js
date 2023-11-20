@@ -14,6 +14,7 @@ const page = () => {
   const [h_template, setH_template] = useState({
     topic: "",
     forms: "",
+    language: "",
     pixel_id: "",
     headline: "",
     content: "",
@@ -24,7 +25,6 @@ const page = () => {
   // question template
   const [q_template, setQ_template] = useState({
     categories: ["", "", "", "", "", ""],
-
     question_list: [],
   });
 
@@ -44,7 +44,6 @@ const page = () => {
   const fetchGenerate = async () => {
     setIsLoading(true);
 
-    console.log("questionlist:", q_template);
     // q_template.question_list = await filterOutTheList(q_template.question_list);
 
     const response = await fetch("/api/new", {
@@ -57,6 +56,7 @@ const page = () => {
         data: {
           topic: h_template.topic,
           forms: h_template.forms,
+          language: h_template.language,
           pixel_id: h_template.pixel_id,
           headline: h_template.headline,
           content: h_template.content.replace("↵", ""),
@@ -78,16 +78,16 @@ const page = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     setIsLoading(false);
     push("/");
     // redirect("/");
   };
-  console.log(
-    "questions",
-    q_template.categories?.filter((r) => r !== "")
-  );
-  console.log("question_list", q_template?.question_list);
+  // console.log(
+  //   "questions",
+  //   q_template.categories?.filter((r) => r !== "")
+  // );
+  // console.log("question_list", q_template?.question_list);
   return (
     <div className="flex-col">
       {/* Step 1: */}
@@ -126,16 +126,3 @@ const page = () => {
 };
 
 export default page;
-
-// Do you want to study in a country where English is the primary language spoken ?,
-// Is studying in a big city important to you ?,
-// Do you want to study at a university with a prestigious reputation for academics ?,
-// Do you prefer universities with a wide range of academic disciplines ?,
-// Is improving your language skills a priority in your study abroad program ?,
-// Are you open to studying in a country where English is not the primary language? ,
-// Are you open to learning about different customs and traditions ?,
-// Are you excited about experiencing festivals and events unique to other countries ?,
-// Is cost an important factor for you when choosing a study abroad program ?,
-// Are you willing to take on part-time work to supplement your study abroad budget ?,
-// Are you open to exploring scholarship opportunities to help fund your study abroad experience ?,
-// Did you know that some Universities in Europe and the USA offer the opportunity to Study for Free ?,

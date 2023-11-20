@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import InputListForm from "@/components/shared/InputListForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
-import TextAreaForm from "@/components/shared/TextAreaForm";
+
 import SheetRight from "@/components/shared/Sheet";
 import QuestionList from "@/components/shared/QuestionList";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
 const Question = ({ template, set_template, setStep, detail }) => {
+  //  control create temple state  1 / 2 / 3  2
   const [nextStep, setNextStep] = useState(false);
+
+  // set Question List
   const [ql, setQL] = useState({});
 
   async function fetchCheck() {
@@ -25,6 +28,8 @@ const Question = ({ template, set_template, setStep, detail }) => {
   useEffect(() => {
     fetchCheck();
   }, [template]);
+
+  // check input correctly
 
   useEffect(() => {
     setQL(Object.groupBy(template?.question_list, ({ category }) => category));

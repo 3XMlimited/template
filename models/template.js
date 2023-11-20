@@ -14,6 +14,10 @@ const TemplateSchema = new Schema(
       type: String,
       required: [true, "Pixel is required."],
     },
+    language: {
+      type: String,
+      required: [true, "language is required."],
+    },
     headline: {
       type: String,
       required: [true, "Headline is required."],

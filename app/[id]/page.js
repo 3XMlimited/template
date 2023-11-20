@@ -20,6 +20,7 @@ const page = () => {
   const [h_template, setH_template] = useState({
     topic: "",
     forms: "",
+    language: "",
     pixel_id: "",
     headline: "",
     content: "",
@@ -76,6 +77,7 @@ const page = () => {
       setH_template({
         topic: data[0].topic,
         forms: data[0].forms,
+        language: data[0].language,
         pixel_id: data[0].pixel_id,
         headline: data[0].headline,
         content: data[0].content,
@@ -106,7 +108,7 @@ const page = () => {
 
   const fetchGenerate = async () => {
     setIsLoading(true);
-    console.log("questionlist:", q_template);
+
     // q_template.question_list = await filterOutTheList(q_template.question_list);
     // console.log(h_template);
     // console.log(q_template);
@@ -121,6 +123,7 @@ const page = () => {
       body: JSON.stringify({
         data: {
           topic: h_template.topic,
+          language: h_template.language,
           forms: h_template.forms,
           pixel_id: h_template.pixel_id,
           headline: h_template.headline,

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import InputForm from "@/components/shared/InputForm";
 import InputListForm from "@/components/shared/InputListForm";
 import LogoForm from "@/components/shared/LogoForm";
-import TextAreaForm from "@/components/shared/TextAreaForm";
 import Tiptap from "@/components/tiptap/Tiptap";
 import PopoverButton from "@/components/shared/PopoverButton";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
@@ -21,8 +20,6 @@ const Result = ({
   id,
 }) => {
   const [nextStep, setNextStep] = useState(false);
-
-  console.log(template);
 
   async function fetchCheck() {
     if (

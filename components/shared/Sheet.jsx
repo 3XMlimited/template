@@ -40,6 +40,12 @@ function SheetRight({
     }
   }, []);
 
+  // step1 -A: confirm  category has value
+  // step2 : find category and question  and value match
+  // step3 : if  true , return { category: category, value: { question, score }} = updateQuestion
+  // step4 : push "updateQuestion" to QuestionsList(Value)
+
+  // step1 -B : if don't have question , push everything to QuestionList
   async function fetchChange() {
     if (category && category !== "") {
       if (question && score) {
@@ -86,6 +92,7 @@ function SheetRight({
     });
   }
 
+  // delete question by question
   async function fetchDelete() {
     if (category && category !== "") {
       if (question && score) {

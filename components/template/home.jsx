@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import InputForm from "@/components/shared/InputForm";
-import TextAreaForm from "@/components/shared/TextAreaForm";
 import ImageForm from "@/components/shared/ImageForm";
 import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
@@ -21,12 +20,28 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const Home = ({ template, set_template, setStep, detail }) => {
+  // select form  picker state
   const [open, setOpen] = useState(false);
-  const [changeInput, setChangeInput] = useState(false);
-  const [nextStep, setNextStep] = useState(false);
+
+  // save form id
   const [forms, setForms] = useState([]);
 
+  // picker or input  default ：form picker -- if can‘t find the form can input form id mainly
+  const [changeInput, setChangeInput] = useState(false);
+
+  //  control create temple state  1 / 2 / 3 default：1
+  const [nextStep, setNextStep] = useState(false);
+
+  //FUNCTION: Get Convertkit form ID
   const fetchConvertKit = async () => {
     const response = await fetch("/api/convertkit", {
       method: "GET",
@@ -37,13 +52,15 @@ const Home = ({ template, set_template, setStep, detail }) => {
     });
 
     const data = await response.json();
-    console.log("forms", data);
+    // console.log("forms", data);
     setForms(data.forms);
   };
+
   useEffect(() => {
     fetchConvertKit();
   }, []);
 
+  // check input correctly
   async function fetchCheck() {
     if (
       template.content !== "" &&
@@ -158,6 +175,25 @@ const Home = ({ template, set_template, setStep, detail }) => {
           </Button>
         </div>
         <div className=" mt-5 col-span-2 flex justify-end space-x-4">
+          <Select
+            className=" mt-10"
+            value={template?.language}
+            onValueChange={(e) => {
+              set_template((prev) => ({ ...prev, language: e }));
+            }}
+          >
+            <SelectTrigger className="w-[240px] mt-7">
+              <SelectValue placeholder="Language" value={template?.language} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="english">English</SelectItem>
+              <SelectItem value="spanish">Spanish</SelectItem>
+              <SelectItem value="portuguese">Portuguese</SelectItem>
+              <SelectItem value="french">French</SelectItem>
+              <SelectItem value="german">German</SelectItem>
+            </SelectContent>
+          </Select>
+
           <InputForm
             title={"Pixel ID"}
             name={"pixel_id"}
