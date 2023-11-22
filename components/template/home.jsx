@@ -65,6 +65,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
     if (
       template.content !== "" &&
       template.forms !== "" &&
+      template.language !== "" &&
       template.headline !== "" &&
       template.pixel_id !== "" &&
       template.image !== "" &&

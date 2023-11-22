@@ -65,7 +65,7 @@ const page = () => {
           scores: q_template.score,
           question_list: q_template.question_list,
           question_for_link: r_template.question_for_link,
-          question_content: r_template.content,
+          question_content: r_template.question_content,
           button_link: r_template.button_link,
           button_name: r_template.button_name,
           domains: r_template.domains,
