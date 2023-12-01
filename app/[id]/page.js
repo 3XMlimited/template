@@ -26,6 +26,7 @@ const page = () => {
     content: "",
     image: "",
     imageBase64: "",
+    state: true,
   });
 
   // question template
@@ -77,6 +78,7 @@ const page = () => {
       setH_template({
         topic: data[0].topic,
         forms: data[0].forms,
+        state: data[0].state,
         language: data[0].language,
         pixel_id: data[0].pixel_id,
         headline: data[0].headline,
@@ -139,7 +141,7 @@ const page = () => {
           domains: r_template.domains,
           domains_url: r_template.domains_url,
           logo: r_template.logoBase64,
-          state: true,
+          state: h_template.state,
           thankyou_content: r_template.content,
           id,
         },

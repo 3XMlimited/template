@@ -6,6 +6,7 @@ import AlertDialogDemo from "@/components/shared/AlertDialog";
 import { Separator } from "@/components/ui/separator";
 import Tiptap from "@/components/tiptap/Tiptap";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
@@ -175,34 +176,50 @@ const Home = ({ template, set_template, setStep, detail }) => {
             {changeInput ? "Search by name" : "Can't not find?"}
           </Button>
         </div>
-        <div className=" mt-5 col-span-2 flex justify-end space-x-4">
-          <Select
-            className=" mt-10"
-            value={template?.language}
-            onValueChange={(e) => {
-              set_template((prev) => ({ ...prev, language: e }));
-            }}
-          >
-            <SelectTrigger className="w-[240px] mt-7">
-              <SelectValue placeholder="Language" value={template?.language} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="english">English</SelectItem>
-              <SelectItem value="spanish">Spanish</SelectItem>
-              <SelectItem value="portuguese">Portuguese</SelectItem>
-              <SelectItem value="french">French</SelectItem>
-              <SelectItem value="german">German</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className=" mt-5 col-span-2 flex justify-between">
+          <div className="space-y-4 ">
+            <div className="space-y-0.5 space-x-8 grid grid-cols-2 max-lg:grid-cols-1 w-full mt-8 border border-gray-500 rounded-lg py-4 pl-2">
+              <h1 className="text-[20px]">Control display</h1>
+              <Switch
+                checked={template.state}
+                onCheckedChange={(e) => {
+                  set_template((prev) => ({ ...prev, state: e }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex space-x-4 h-full items-end">
+            <Select
+              className="mt-20"
+              value={template?.language}
+              onValueChange={(e) => {
+                set_template((prev) => ({ ...prev, language: e }));
+              }}
+            >
+              <SelectTrigger className="w-[240px] mt-7">
+                <SelectValue
+                  placeholder="Language"
+                  value={template?.language}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="english">English</SelectItem>
+                <SelectItem value="spanish">Spanish</SelectItem>
+                <SelectItem value="portuguese">Portuguese</SelectItem>
+                <SelectItem value="french">French</SelectItem>
+                <SelectItem value="german">German</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <InputForm
-            title={"Pixel ID"}
-            name={"pixel_id"}
-            placeholder={"Facebook Pixel ID "}
-            value={template}
-            setValue={set_template}
-            style={{ width: "w-[700px]" }}
-          />
+            <InputForm
+              title={"Pixel ID"}
+              name={"pixel_id"}
+              placeholder={"Facebook Pixel ID "}
+              value={template}
+              setValue={set_template}
+              style={{ width: "w-[700px]" }}
+            />
+          </div>
         </div>
       </div>
 

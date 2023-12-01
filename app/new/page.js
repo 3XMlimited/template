@@ -20,6 +20,7 @@ const page = () => {
     content: "",
     image: "",
     imageBase64: "",
+    state: true,
   });
 
   // question template
@@ -72,7 +73,7 @@ const page = () => {
           domains_url: r_template.domains_url,
           logo: r_template.logoBase64,
           thankyou_content: r_template.content,
-          state: true,
+          state: h_template.state,
         },
       }),
     });
