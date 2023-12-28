@@ -7,7 +7,12 @@ export const sidebarLinks = [
   {
     imgURL: "/assets/create.svg",
     route: "/new",
-    label: "Create template",
+    label: "Create ",
+  },
+  {
+    imgURL: "/assets/community.svg",
+    route: "/forms",
+    label: "Forms",
   },
 ];
 

@@ -16,20 +16,20 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchConvertKit = async (id) => {
-    const response = await fetch("/api/convertkit", {
-      method: "POST",
-      timeout: 30000,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
+  // const fetchConvertKit = async (id) => {
+  //   const response = await fetch("/api/convertkit", {
+  //     method: "POST",
+  //     timeout: 30000,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ id }),
+  //   });
 
-    const data = await response.json();
-    console.log(data);
-    return data;
-  };
+  //   const data = await response.json();
+  //   console.log(data);
+  //   return data;
+  // };
 
   async function fetchData() {
     setIsLoading(true);

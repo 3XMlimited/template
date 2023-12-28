@@ -43,8 +43,8 @@ const Home = ({ template, set_template, setStep, detail }) => {
   const [nextStep, setNextStep] = useState(false);
 
   //FUNCTION: Get Convertkit form ID
-  const fetchConvertKit = async () => {
-    const response = await fetch("/api/convertkit", {
+  const fetchForms = async () => {
+    const response = await fetch("/api/form", {
       method: "GET",
       timeout: 30000,
       headers: {
@@ -53,12 +53,13 @@ const Home = ({ template, set_template, setStep, detail }) => {
     });
 
     const data = await response.json();
+    console.log(data);
     // console.log("forms", data);
-    setForms(data.forms);
+    setForms(data);
   };
 
   useEffect(() => {
-    fetchConvertKit();
+    fetchForms();
   }, []);
 
   // check input correctly
@@ -103,7 +104,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
           />
 
           {/* <FormLabel>Language</FormLabel> */}
-          {changeInput ? (
+          {/* {changeInput ? (
             <InputForm
               title={"Form"}
               name={"forms"}
@@ -112,47 +113,49 @@ const Home = ({ template, set_template, setStep, detail }) => {
               setValue={set_template}
               className="items-start"
             />
-          ) : (
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  className={`
+          ) : ( */}
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                className={`
                     w-[400px] justify-between  mt-[50px]
                    ${!template.forms && "text-muted-foreground"}
                   `}
-                >
-                  {template.forms
-                    ? forms.find((form) => form.id === Number(template.forms))
-                        ?.name
-                    : "Select forms"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[400px] p-0 h-[400px] ">
-                <Command>
-                  <CommandInput placeholder="Search forms..." />
-                  <CommandEmpty>No Form found.</CommandEmpty>
-                  <CommandGroup className="overflow-y-scroll">
-                    {forms?.map((form) => (
-                      <CommandItem
-                        value={Number(template.forms)}
-                        key={form.id}
-                        onSelect={() => {
-                          // console.log("form", form);
-                          set_template((prev) => ({ ...prev, forms: form.id }));
-                          // form.setValue("form", form.id);
-                        }}
-                      >
-                        {form.name}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          )}
+              >
+                {template.forms
+                  ? forms.find((form) => form._id === template.forms)?.name
+                  : "Select forms"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[400px] p-0 h-[400px] ">
+              <Command>
+                <CommandInput placeholder="Search forms..." />
+                <CommandEmpty>No Form found.</CommandEmpty>
+                <CommandGroup className="overflow-y-scroll">
+                  {forms?.map((form, i) => (
+                    <CommandItem
+                      // value={template.forms}
+                      key={form._id}
+                      onSelect={() => {
+                        // console.log("form", form);
+                        set_template((prev) => ({
+                          ...prev,
+                          forms: form._id,
+                        }));
+                        // form.setValue("form", form.id);
+                      }}
+                    >
+                      {form.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          {/* )} */}
 
           {/* <FormDescription>
             This is the language that will be used in the dashboard.
@@ -167,7 +170,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
             setValue={set_template}
           /> */}
         </div>
-        <div className=" col-span-2 flex justify-end text-right ">
+        {/* <div className=" col-span-2 flex justify-end text-right ">
           <Button
             variant={"none"}
             className="text-indigo-500 italic"
@@ -175,7 +178,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
           >
             {changeInput ? "Search by name" : "Can't not find?"}
           </Button>
-        </div>
+        </div> */}
         <div className=" mt-5 col-span-2 flex justify-between">
           <div className="space-y-4 ">
             <div className="space-y-0.5 space-x-8 grid grid-cols-2 max-lg:grid-cols-1 w-full mt-8 border border-gray-500 rounded-lg py-4 pl-2">
