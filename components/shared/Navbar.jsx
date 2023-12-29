@@ -80,7 +80,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-white shadow-md py-[12px] px-[20px] mb-[18px] flex gap-12  item-center ">
+    <div className="bg-[#48639c] text-white shadow-md py-[12px] px-[20px] mb-[18px] flex gap-12  item-center ">
       <a id="convertkit-logo" href="/" class="block w-8 h-8">
         <img
           src="https://cdn.convertkit.com/packs/media/app/navigation/convertkit-logo-santa-8638470302bc3169784cc2dbc9d16ca2.png"
@@ -110,11 +110,15 @@ export function Navbar() {
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/">
-              <NavigationMenuTrigger>Template</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-[#48639c]">
+                Template
+              </NavigationMenuTrigger>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Forms</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="bg-[#48639c]">
+              Forms
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                 {components.map((component) => (
@@ -131,7 +135,9 @@ export function Navbar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Email</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="bg-[#48639c]">
+              Email
+            </NavigationMenuTrigger>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
