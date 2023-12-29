@@ -68,7 +68,7 @@ const Chart = () => {
           itemStyle: {
             shadowBlur: 10,
             // normal: { color: "blue" },
-            color: "blue",
+            color: "rgb(72,99,156)",
             shadowColor: "rgba(0,0,0,0.3)",
           },
           data: data1,
@@ -81,7 +81,7 @@ const Chart = () => {
           itemStyle: {
             shadowBlur: 10,
             // normal: { color: "blue" },
-            // color: "green",
+            color: "rgba(72,99,156,0.8)",
             shadowColor: "rgba(0,0,0,0.3)",
           },
           data: data2,
@@ -94,7 +94,7 @@ const Chart = () => {
           itemStyle: {
             shadowBlur: 10,
             // normal: { color: "blue" },
-            // color: "red",
+            color: "rgb(72,99,156)",
             shadowColor: "rgba(0,0,0,0.3)",
           },
           data: data3,
@@ -107,7 +107,7 @@ const Chart = () => {
           itemStyle: {
             shadowBlur: 10,
             // normal: { color: "blue" },
-            // color: "orange",
+            color: "rgba(72,99,156,0.8)",
             shadowColor: "rgba(0,0,0,0.3)",
           },
           data: data4,

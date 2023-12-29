@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MotionDiv } from "@/components/motion/MontionDiv";
 
-const FormBox = ({ form, setState, setIsLoading, index, setSum }) => {
+const FormBox = ({ form, setState, setIsLoading, index }) => {
   const [result, setResult] = useState({});
+
   const fetchDelete = async (_id) => {
     setIsLoading(true);
 
@@ -40,15 +41,11 @@ const FormBox = ({ form, setState, setIsLoading, index, setSum }) => {
       },
     });
     const result = await response.json();
-    console.log(result);
+
     setResult({
       count: result?.total_subscriptions,
     });
-    // setSum((prev) => ({
-    //   ...prev,
-    //   total: prev.total + result?.total_subscriptions,
-    // }));
-    // setState(true);
+
     return result;
   };
 

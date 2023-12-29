@@ -157,7 +157,7 @@ const page = () => {
   return (
     <>
       {isLoading ? (
-        <div className="relative top-[300px] left-[40%]">
+        <div className="relative top-[300px] left-[45%]">
           <Button disabled>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Please wait
@@ -166,11 +166,20 @@ const page = () => {
       ) : (
         // <Progress value={33} />
 
-        <div className="flex-col space-y-6">
-          <Button className="">
-            <Link href="/"> {"<-Back"}</Link>
-          </Button>
+        <div className="flex-col space-y-6 w-[100%]">
+          <div className="w-[100%] flex justify-between">
+            <div>
+              <Button className="">
+                <Link href="/"> {"Back"}</Link>
+              </Button>
+            </div>
 
+            <div>
+              <Button className="" onClick={fetchGenerate}>
+                Save
+              </Button>
+            </div>
+          </div>
           {/* Step 1: */}
           {step === 1 && (
             <Home

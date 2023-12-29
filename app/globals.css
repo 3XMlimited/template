@@ -119,5 +119,9 @@
     @apply relative flex justify-start gap-4 rounded-lg p-4;
   }
 
+  td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
 }

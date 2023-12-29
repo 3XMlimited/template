@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <main className="space-y-6">
       {isLoading ? (
-        <div className="relative top-[300px] left-[40%]">
+        <div className="relative top-[300px] left-[45%]">
           <Button disabled>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Please wait
@@ -114,11 +114,18 @@ export default function Home() {
         </div>
       ) : (
         <>
-          <div className="flex-col">
-            <h1 className="font-bold text-[40px]">Dashboard</h1>
-            <h6 className="text-slate-400">
-              Right click the logo to displays a actions
-            </h6>
+          <div className="w-[100%] flex justify-between">
+            <div className="flex-col">
+              <h1 className="font-bold text-[40px]">Dashboard</h1>
+              <h6 className="text-slate-400">
+                Right click the logo to displays a actions
+              </h6>
+            </div>
+            <div className="flex-col h-full items-center mt-[20px]">
+              <Link href="/new">
+                <Button> Create Template</Button>
+              </Link>
+            </div>
           </div>
           <div className="grid  grid-cols-4 gap-20">
             {data?.map((d, i) => (

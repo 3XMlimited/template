@@ -44,6 +44,10 @@ const EmailSchema = new Schema(
       type: Object,
       required: false,
     },
+    date: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
