@@ -39,15 +39,15 @@ const Chart = () => {
       //   // left: "10%",
       // },
 
-      // toolbox: {
-      //   feature: {
-      //     magicType: {
-      //       // type: ["stack"],
-      //     },
-      //     //   dataView: {},
-      //   },
-      // },
-      // tooltip: {},
+      toolbox: {
+        feature: {
+          magicType: {
+            // type: ["stack"],
+          },
+          //   dataView: {},
+        },
+      },
+      tooltip: {},
       xAxis: {
         data: xAxisData,
         // name: "X Axis",

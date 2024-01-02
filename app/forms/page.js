@@ -2,7 +2,7 @@ import FormsHeader from "@/components/forms/FormsHeader";
 import FormsTable from "@/components/forms/FormsTable";
 const page = () => {
   return (
-    <main className=" relative">
+    <main className="relative">
       {/* <FormChart sum={sum} /> */}
       <div>
         <FormsHeader />

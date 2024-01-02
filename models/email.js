@@ -32,6 +32,11 @@ const EmailSchema = new Schema(
       require: false,
       // required: [true, "form id is required."],
     },
+    topic: {
+      type: String,
+      require: false,
+      // required: [true, "form id is required."],
+    },
     // created_at: {
     //   type: Date,
     //   default: Date.now,

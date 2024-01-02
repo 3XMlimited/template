@@ -20,8 +20,7 @@ const list = [
   },
 ];
 
-const FilterBar = () => {
-  const [active, setActive] = useState("new");
+const FilterBar = ({ active, setActive }) => {
   return (
     <div
       role="tablist"

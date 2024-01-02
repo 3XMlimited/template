@@ -1,7 +1,13 @@
-// import React from "react";
+"use client";
+import React, { useState } from "react";
 // import Chart from "@/components/forms/barChart";
+import moment from "moment";
 import DateRangePicker from "@/components/shared/DateRangePicker";
 const FormChart = ({ sum }) => {
+  const [date, setDate] = useState({
+    from: new Date(moment().subtract(14, "days")),
+    to: new Date(),
+  });
   return (
     <div className="my-0 mx-auto relative w-[100%] py-[20px] px-0 items-center flex justify-between">
       <h2 className="text-[24px] font-semibold">Landing Page & Form Signups</h2>
@@ -32,7 +38,11 @@ const FormChart = ({ sum }) => {
             Total
           </li>
         </ul>
-        <DateRangePicker className={"ml-10 w-[100%] max-w-xs items-center"} />
+        <DateRangePicker
+          className={"ml-10 w-[100%] max-w-xs items-center"}
+          date={date}
+          setDate={setDate}
+        />
       </div>
     </div>
   );

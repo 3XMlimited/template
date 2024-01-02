@@ -34,6 +34,12 @@ const Chart = () => {
       yAxis: {
         type: "value",
       },
+      grid: {
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+      },
 
       series: [
         {
@@ -86,14 +92,10 @@ const Chart = () => {
   }, []);
 
   return (
-    <div className="  h-full w-full min-w-full flex flex-col mx-auto    max-lg:hidden">
-      <div className="h-full w-full min-w-full flex lg:flex-row flex-col max-auto ">
-        {/* <div className="lg:w-[50vw] ml-10 lg:relative flex flex-col justify-center align-middle content-center "> */}
-        <div
-          id="echarts-container"
-          style={{ width: "100%", height: "400px" }}
-        />
-      </div>
+    <div className="w-[100%] flex flex-col   max-lg:hidden">
+      {/* <div className="lg:w-[50vw] ml-10 lg:relative flex flex-col justify-center align-middle content-center "> */}
+      <div id="echarts-container" style={{ width: "100%", height: "400px" }} />
+
       {/* </div> */}
     </div>
   );

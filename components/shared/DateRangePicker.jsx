@@ -14,14 +14,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-function DateRangePicker({ className }) {
-  const [date, setDate] = useState({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  });
-
+function DateRangePicker({ className, date, setDate }) {
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("grid gap-2 ", className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button

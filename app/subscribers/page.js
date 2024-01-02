@@ -1,18 +1,87 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import FilterBar from "@/components/subscribers/FilterBar";
 import DateRangePicker from "@/components/shared/DateRangePicker";
 import Chart from "@/components/subscribers/barChart";
-
-import { EmailsTotal } from "../action/totalSubscribers";
-
+import moment from "moment";
+// import { EmailsTotal } from "../action/totalSubscribers";
+import LabelBar from "@/components/subscribers/LabelBar";
 import SubscriptionContent from "@/components/subscribers/SubscriptionContent";
+import SubscriptionRightBar from "@/components/subscribers/SubscriptionRightBar";
+import { exportCsv, getDaysArray } from "@/utils/utils";
 
 const page = () => {
   // const fetchNext
+
+  const [active, setActive] = useState("new");
+  const [date, setDate] = useState({
+    from: new Date(moment().subtract(14, "days")),
+    to: new Date(),
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageArray, setPageArray] = useState([1, 2, 3]);
+  const [rules, setRules] = useState({});
+  useEffect(() => {
+    setRules({ date: { $in: getDaysArray(date?.from, date?.to) } });
+  }, [date]);
+  // export csv
+  const fetchExports = async () => {
+    console.log(date);
+    if (date.to === undefined) {
+      date.to = date.from;
+    }
+    const range = getDaysArray(date.from, date.to);
+    const rules = { date: { $in: range } };
+    const response = await fetch("/api/subscription", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rules,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    exportCsv(data, date);
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const response = await fetch("/api/subscription", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rules,
+        pageNumber: pageNumber - 1,
+      }),
+    });
+    const result = await response.json();
+    setEmails(result);
+    setIsLoading(false);
+    return;
+  };
+  useEffect(() => {
+    if (date.to === undefined) {
+      date.to = date.from;
+    }
+    if (date.from === undefined) {
+      date.from = date.to;
+    }
+    const range = getDaysArray(date.from, date.to);
+    const newRules = { date: { $in: range } };
+    setRules(newRules);
+  }, [date]);
+
   return (
-    <div className="relative border-b border-gray-200 bg-white border-x-2 border-x-200">
+    <div className="relative border-b border-gray-200 bg-white ">
       {/* title */}
       <div
-        className="mx-auto px-8 lg:h-20 flex justify-between flex-col lg:flex-row pt-8 pb-5"
+        className="mx-auto px-8 lg:h-20 flex justify-between flex-col lg:flex-row pt-8 pb-5 bg-white  z-10 "
         style={{ maxWidth: "min(100%, 1440px)" }}
       >
         <h2 className="flex-grow text-[24px] leading-8 font-semibold text-center md:text-left mb-4 lg:mb-0">
@@ -23,15 +92,16 @@ const page = () => {
 
       {/* sub bar */}
       <div
-        className="mx-auto px-8 border-y border-gray-200 "
+        className="mx-auto px-8 border-b border-gray-200 "
         style={{ maxWidth: "min(100%, 1440px)" }}
       >
         <div className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:gap-0">
-          <FilterBar />
+          <FilterBar active={active} setActive={setActive} />
           <div className="pb-2 order-1 lg:order-2 flex flex-col md:flex-row items-center gap-2 flex-grow lg:flex-wrap justify-center lg:justify-end">
             <button
               data-reach-tooltip-trigger=""
-              className="mr-2 border border-solid border-transparent leading-[22px] focus:outline-none border-gray-200 text-base p-2 rounded text-gray-800 bg-white hover:bg-gray-50 focus:outline-blue"
+              className="mr-2 border border-solid  leading-[22px] focus:outline-none border-gray-200 text-base p-2 rounded text-gray-800 bg-white hover:bg-gray-50 focus:outline-blue"
+              onClick={fetchExports}
             >
               <span
                 style={{
@@ -109,16 +179,34 @@ const page = () => {
                 </svg>
               </button>
             </div>
-            <DateRangePicker />
+            <DateRangePicker date={date} setDate={setDate} />
           </div>
         </div>
       </div>
+      <div className="flex flex-col border-x-2 border-gray-200 ">
+        <Chart />
 
-      <Chart />
-
-      <EmailsTotal />
-
-      <SubscriptionContent />
+        {/* <EmailsTotal /> */}
+        <LabelBar />
+        <div className="flex flex-col lg:flex-row lg:flex-wrap  h-[600px]">
+          <SubscriptionRightBar
+            setRules={setRules}
+            setEmails={setEmails}
+            fetchData={fetchData}
+          />
+          <SubscriptionContent
+            emails={emails}
+            rules={rules}
+            setEmails={setEmails}
+            setIsLoading={setIsLoading}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            pageArray={pageArray}
+            setPageArray={setPageArray}
+            fetchData={fetchData}
+          />
+        </div>
+      </div>
     </div>
   );
 };

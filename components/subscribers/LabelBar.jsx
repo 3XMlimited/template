@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchLabelData } from "@/utils/utils";
 
-const LabelBar = ({ data }) => {
+const LabelBar = () => {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchLabelData();
+      setData(result);
+    };
+    fetchData();
+  }, []);
   return (
     <div className=" border-b border-gray-200 ">
       <div className="bg-white border-t-2 border-gray-200 flex min-h-[97px] ">
@@ -17,7 +26,7 @@ const LabelBar = ({ data }) => {
             </div>
             <div class="flex  flex-col items-center justify-center   ">
               <span className="text-[25px] font-bold mb-[5px]">
-                {data?.total}
+                {data?.total || 0}
               </span>
               <span className="text-[11px] uppercase tracking-wide text-[#6a6e72]">
                 Total subscriber
@@ -66,7 +75,7 @@ const LabelBar = ({ data }) => {
             </div>
             <div class="flex  flex-col items-center justify-center    ">
               <span className="text-[25px] font-bold mb-[5px]">
-                {data?.today}
+                {data?.today | 0}
               </span>
               <span className="text-[11px] uppercase tracking-wide text-[#6a6e72]">
                 New subscribers

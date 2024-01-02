@@ -80,7 +80,10 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-[#48639c] text-white shadow-md py-[12px] px-[20px] mb-[18px] flex gap-12  item-center ">
+    <div
+      style={{ backgroundColor: "rgba(33,47,79)" }}
+      className=" text-white shadow-md py-[12px] px-[20px] mb-[18px] flex gap-12  item-center "
+    >
       <a id="convertkit-logo" href="/" class="block w-8 h-8">
         <img
           src="https://cdn.convertkit.com/packs/media/app/navigation/convertkit-logo-santa-8638470302bc3169784cc2dbc9d16ca2.png"
@@ -110,13 +113,15 @@ export function Navbar() {
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/">
-              <NavigationMenuTrigger className="bg-[#48639c]">
+              <NavigationMenuTrigger
+                style={{ backgroundColor: "rgba(33,47,79)" }}
+              >
                 Template
               </NavigationMenuTrigger>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-[#48639c]">
+            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
               Forms
             </NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -135,7 +140,7 @@ export function Navbar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-[#48639c]">
+            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
               Email
             </NavigationMenuTrigger>
           </NavigationMenuItem>
