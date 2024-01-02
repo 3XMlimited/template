@@ -87,7 +87,7 @@ export function Navbar() {
           width="40"
           height="40"
           alt="ConvertKit logo"
-          className="mt-3"
+          className=""
         />
         <span
           style={{
