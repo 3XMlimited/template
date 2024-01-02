@@ -34,20 +34,20 @@ const Chart = () => {
     };
 
     let option = {
-      legend: {
-        data: ["bar", "bar2", "bar3", "bar4"],
-        left: "10%",
-      },
+      // legend: {
+      //   data: ["bar", "bar2", "bar3", "bar4"],
+      //   // left: "10%",
+      // },
 
-      toolbox: {
-        feature: {
-          magicType: {
-            // type: ["stack"],
-          },
-          //   dataView: {},
-        },
-      },
-      tooltip: {},
+      // toolbox: {
+      //   feature: {
+      //     magicType: {
+      //       // type: ["stack"],
+      //     },
+      //     //   dataView: {},
+      //   },
+      // },
+      // tooltip: {},
       xAxis: {
         data: xAxisData,
         // name: "X Axis",
@@ -57,8 +57,12 @@ const Chart = () => {
       },
       yAxis: {},
       grid: {
-        bottom: 100,
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
       },
+
       series: [
         {
           name: "bar",
@@ -118,12 +122,6 @@ const Chart = () => {
       },
     };
     myChart.on("brushSelected", function (params) {
-      var brushed = [];
-      var brushComponent = params.batch[0];
-      //   for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
-      //     var rawIndices = brushComponent.selected[sIdx].dataIndex;
-      //     brushed.push("[Series " + sIdx + "] " + rawIndices.join(", "));
-      //   }
       myChart.setOption({
         title: {
           backgroundColor: "#333",
@@ -147,15 +145,9 @@ const Chart = () => {
   }, []);
 
   return (
-    <div className="  h-full w-full min-w-full flex flex-col mx-auto    max-lg:hidden">
-      <div className="h-full w-full min-w-full flex lg:flex-row flex-col max-auto ">
-        {/* <div className="lg:w-[50vw] ml-10 lg:relative flex flex-col justify-center align-middle content-center "> */}
-        <div
-          id="echarts-container"
-          style={{ width: "100%", height: "400px" }}
-        />
-      </div>
-      {/* </div> */}
+    <div className="  h-full w-[100%]   ">
+      {/* <div className="lg:w-[50vw] ml-10 lg:relative flex flex-col justify-center align-middle content-center "> */}
+      <div id="echarts-container" style={{ width: "100%", height: "400px" }} />
     </div>
   );
 };
