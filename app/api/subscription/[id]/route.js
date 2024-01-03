@@ -32,7 +32,7 @@ export const GET = async (req, { params }) => {
     });
     let today_emails = await Emails.find({
       date: moment().format("YYYY-MM-DD"),
-      id,
+      id: id,
     });
 
     return new Response(
