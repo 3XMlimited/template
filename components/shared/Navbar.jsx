@@ -114,14 +114,16 @@ export function Navbar() {
           <NavigationMenuItem>
             <Link href="/">
               <NavigationMenuTrigger
-                style={{ backgroundColor: "rgba(33,47,79)" }}
+                style={{ backgroundColor: "rgba(33,47,79)", color: "white" }}
               >
                 Template
               </NavigationMenuTrigger>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
+            <NavigationMenuTrigger
+              style={{ backgroundColor: "rgba(33,47,79", color: "white" }}
+            >
               Forms
             </NavigationMenuTrigger>
             <NavigationMenuContent>
@@ -140,7 +142,9 @@ export function Navbar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
+            <NavigationMenuTrigger
+              style={{ backgroundColor: "rgba(33,47,79", color: "white" }}
+            >
               Email
             </NavigationMenuTrigger>
           </NavigationMenuItem>
@@ -157,7 +161,7 @@ const ListItem = React.forwardRef(
         <NavigationMenuLink asChild>
           <a
             ref={ref}
-            className="main-link h-full flex p-2 rounded hover:no-underline hover:text-gray-900 focus:outline-blue focus:no-underline focus:bg-gray-50"
+            className="main-link h-full flex p-2 rounded hover:no-underline hover:text-white focus:outline-blue focus:no-underline focus:bg-gray-50"
             {...props}
           >
             {icon}
