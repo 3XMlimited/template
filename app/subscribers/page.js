@@ -66,6 +66,9 @@ const page = () => {
     return;
   };
   useEffect(() => {
+    if (date.from === undefined && date.to === undefined) {
+      return;
+    }
     if (date.to === undefined) {
       date.to = date.from;
     }
