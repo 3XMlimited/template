@@ -114,17 +114,15 @@ export function Navbar() {
           <NavigationMenuItem>
             <Link href="/">
               <NavigationMenuTrigger
-                style={{ backgroundColor: "rgba(33,47,79)", color: "white" }}
+                style={{ backgroundColor: "rgba(33,47,79)" }}
               >
-                Template
+                <p className="hover:text-white"> Template</p>
               </NavigationMenuTrigger>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger
-              style={{ backgroundColor: "rgba(33,47,79", color: "white" }}
-            >
-              Forms
+            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
+              <p className="hover:text-white"> Forms</p>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -142,10 +140,8 @@ export function Navbar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuTrigger
-              style={{ backgroundColor: "rgba(33,47,79", color: "white" }}
-            >
-              Email
+            <NavigationMenuTrigger style={{ backgroundColor: "rgba(33,47,79" }}>
+              <p className="hover:text-white"> Email</p>
             </NavigationMenuTrigger>
           </NavigationMenuItem>
         </NavigationMenuList>
