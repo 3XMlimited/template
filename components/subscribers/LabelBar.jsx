@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchLabelData } from "@/utils/utils";
 
-const LabelBar = () => {
-  const [data, setData] = useState({});
+const LabelBar = ({ data, setData }) => {
+  // const [data, setData] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetchLabelData();

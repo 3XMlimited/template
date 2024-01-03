@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { set } from "mongoose";
 
 const SubscriptionContent = ({
   emails,
@@ -93,19 +94,23 @@ const SubscriptionContent = ({
   });
 
   // useEffect(() => {
-  // if (selectedAll) {
-  //   setSelectedIds((prev) => [
-  //     ...prev,
-  //     ...emails.data.map((email) => email._id),
-  //   ]);
-  // }
-  // if (selectedIds.length > 0 && selectedAll === false) {
-  //   setSelectedIds([]);
-  // }
-  // if (selectedAll && selectedIds.length < emails.data.length) {
-  //   setSelectedAll(false);
-  // }
-  // }, [selectedAll]);
+  //   if (selectedAll) {
+  //     setSelectedIds((prev) => [
+  //       ...prev,
+  //       ...emails.data.map((email) => email._id),
+  //     ]);
+  //   }
+  //   if (selectedIds.length < emails?.data?.length) {
+  //     setSelectedAll(false);
+  //   }
+
+  //   if (selectedIds.length > 0 && selectedAll === false) {
+  //     // setSelectedIds([]);
+  //   }
+  //   // if (selectedAll && selectedIds.length < emails.data.length) {
+  //   //   setSelectedAll(false);
+  //   // }
+  // }, [selectedIds, selectedAll]);
 
   console.log("select id list", selectedIds);
   console.log("action", action);
@@ -260,21 +265,12 @@ const SubscriptionContent = ({
                 <thead>
                   <tr className="table-row border-b-2 border-gray-200 ">
                     <th>
-                      <Checkbox
+                      {/* <Checkbox
                         id={"all"}
                         checked={selectedAll}
                         onCheckedChange={(e) => setSelectedAll(e)}
-                        // onCheckedChange={(e) =>
-                        //   e
-                        //     ? setSelectedForms((prev) => [
-                        //         ...prev,
-                        //         { form: form.name, id: form._id },
-                        //       ])
-                        //     : setSelectedForms((prev) =>
-                        //         prev.filter((r) => r.id !== form._id)
-                        //       )
-                        // }
-                      />
+                       
+                      /> */}
                     </th>
                     <th className="text-left uppercase font-medium text-[#555] text-[12px] h-[30px]">
                       Subscriber

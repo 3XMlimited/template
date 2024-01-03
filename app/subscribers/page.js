@@ -23,9 +23,10 @@ const page = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageArray, setPageArray] = useState([1, 2, 3]);
   const [rules, setRules] = useState({});
-  useEffect(() => {
-    setRules({ date: { $in: getDaysArray(date?.from, date?.to) } });
-  }, [date]);
+  const [chartData, setChartData] = useState([]);
+  // label bar data
+  const [labelData, setLabelData] = useState([]);
+
   // export csv
   const fetchExports = async () => {
     console.log(date);
@@ -65,8 +66,9 @@ const page = () => {
     setIsLoading(false);
     return;
   };
+
   useEffect(() => {
-    if (date.from === undefined && date.to === undefined) {
+    if (date?.from === undefined && date?.to === undefined) {
       return;
     }
     if (date.to === undefined) {
@@ -78,8 +80,51 @@ const page = () => {
     const range = getDaysArray(date.from, date.to);
     const newRules = { date: { $in: range } };
     setRules(newRules);
-  }, [date]);
 
+    const fetchChart = async () => {
+      const range = getDaysArray(date?.from, date?.to);
+      const response = await fetch("/api/result/subscribers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rules: { date: { $in: range } },
+        }),
+      });
+      const result = await response.json();
+
+      let total_data = [];
+      let new_data = [];
+      range.map((d) => {
+        let sub = result.filter((r) => r.date === d);
+        if (d === moment().format("YYYY-MM-DD")) {
+          total_data.push(labelData?.total);
+          new_data.push(labelData?.today);
+        } else {
+          total_data.push(
+            // date: d,
+            // subscriptions:
+            sub[0]?.total_subscriptions | 0
+          );
+          new_data.push(
+            // date: d,
+            // subscriptions:
+            sub[0]?.new_subscriptions | 0
+          );
+        }
+      });
+
+      // console.log("chart", result, data);
+      setChartData({ total: total_data, new: new_data });
+
+      return;
+    };
+    if (date?.from && date?.to) {
+      fetchChart();
+    }
+  }, [date, labelData]);
+  // console.log("chart", chartData);
   return (
     <div className="relative border-b border-gray-200 bg-white ">
       {/* title */}
@@ -187,10 +232,14 @@ const page = () => {
         </div>
       </div>
       <div className="flex flex-col border-x-2 border-gray-200 ">
-        <Chart />
+        <Chart
+          dates={getDaysArray(date?.from, date?.to)}
+          data={chartData[active]}
+          active={active}
+        />
 
         {/* <EmailsTotal /> */}
-        <LabelBar />
+        <LabelBar data={labelData} setData={setLabelData} />
         <div className="flex flex-col lg:flex-row lg:flex-wrap  h-[600px]">
           <SubscriptionRightBar
             setRules={setRules}

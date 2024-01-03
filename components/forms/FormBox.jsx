@@ -44,6 +44,7 @@ const FormBox = ({ form, setState, setIsLoading, index }) => {
 
     setResult({
       count: result?.total_subscriptions,
+      today: result?.today,
     });
 
     return result;
@@ -160,9 +161,7 @@ const FormBox = ({ form, setState, setIsLoading, index }) => {
           </div>
         </div>
         <div className="bg-gray-50 rounded-lg p-2">
-          <p className="text-gray-900 font-semibold text-sm mb-4">
-            Last 90 days
-          </p>
+          <p className="text-gray-900 font-semibold text-sm mb-4">Today</p>
           <div className="flex justify-between">
             <div className="flex flex-col gap-1">
               <div className="text-gray-700 uppercase font-semibold text-[12px]">
@@ -175,7 +174,7 @@ const FormBox = ({ form, setState, setIsLoading, index }) => {
                 Subscribers
               </div>
               <div className="text-[16px] text-gray-800 font-semibold">
-                {result?.count}
+                {result?.today}
               </div>
             </div>
             <div className="flex flex-col gap-1">

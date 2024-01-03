@@ -19,7 +19,7 @@ const SubscriptionTable = ({ email, index, selectedIds, setSelectedIds }) => {
       </td>
       <td>
         <Link
-          href="/"
+          href={`/subscribers/${email._id}`}
           className="flex items-center  max-w-[360px] relative align-middle break-words "
         >
           <span

@@ -1,6 +1,6 @@
 import { connectToDB } from "@/utils/database";
 import Emails from "@/models/email";
-
+import Results from "@/models/result";
 export const POST = async (req) => {
   const body = await req.json();
   const data = await body.data;
@@ -23,10 +23,18 @@ export const GET = async (req, { params }) => {
   try {
     await connectToDB();
 
-    let emails = await Emails.find({ id });
+    let emails = await Results.find({});
+    let total_subscriptions = [];
+    emails.map((e) => {
+      let form = e.forms.filter((f) => f.id === id);
+      total_subscriptions.push(form[0]?.subscriptions | 0);
+    });
 
     return new Response(
-      JSON.stringify({ total_subscriptions: emails.length }),
+      JSON.stringify({
+        today: total_subscriptions[total_subscriptions.length - 1],
+        total_subscriptions: total_subscriptions.reduce((acc, b) => acc + b, 0),
+      }),
       { status: 201 }
     );
   } catch (error) {

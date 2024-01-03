@@ -62,7 +62,7 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
       },
     });
     const data = await response.json();
-    console.log("data", data);
+
     setForms(data);
   };
   // add new subscription
@@ -91,7 +91,6 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
   useEffect(() => {
     fetchFormList();
   }, []);
-  console.log(selectedForms);
   return (
     <div className="bg-gray-100 md:order-1 lg:order-2 ml-[9px] px-[21px]  pt-6 pb-6 md:pb-0 lg:max-w-sm">
       <section>

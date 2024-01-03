@@ -4,13 +4,71 @@ import React from "react";
 import * as echarts from "echarts";
 import { useEffect } from "react";
 
-const Chart = () => {
-  let results = [];
-
+const Chart = ({ dates, data, active }) => {
   useEffect(() => {
     var chartDom = document.getElementById("echarts-container");
     var myChart = echarts.init(chartDom);
+    let series;
+    if (active === "new") {
+      series = [
+        {
+          name: "Subscribers",
+          type: "bar",
 
+          tooltip: {
+            valueFormatter: function (value) {
+              return value + " new subscribers";
+            },
+          },
+          itemStyle: {
+            shadowBlur: 10,
+
+            color: "rgba(62,163,128)",
+            shadowColor: "rgba(0,0,0,0.3)",
+          },
+
+          data: data,
+        },
+
+        {
+          name: "Cancellations",
+          type: "line",
+          tooltip: {
+            valueFormatter: function (value) {
+              return value;
+            },
+          },
+          itemStyle: {
+            shadowBlur: 10,
+
+            color: "black",
+            shadowColor: "rgba(0,0,0,0.3)",
+          },
+          // data: Array.from([0]),
+        },
+      ];
+    }
+    if (active === "total") {
+      series = [
+        {
+          name: "Subscribers",
+          type: "line",
+          tooltip: {
+            valueFormatter: function (value) {
+              return value;
+            },
+          },
+          itemStyle: {
+            shadowBlur: 10,
+
+            color: "black",
+            shadowColor: "rgba(0,0,0,0.3)",
+          },
+          // areaStyle: {},
+          data: data,
+        },
+      ];
+    }
     let option = {
       tooltip: {
         trigger: "axis",
@@ -25,7 +83,7 @@ const Chart = () => {
       xAxis: [
         {
           type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: dates,
           axisPointer: {
             type: "shadow",
           },
@@ -41,47 +99,7 @@ const Chart = () => {
         bottom: 0,
       },
 
-      series: [
-        {
-          name: "Evaporation",
-          type: "bar",
-
-          tooltip: {
-            valueFormatter: function (value) {
-              return value + " new subscribers";
-            },
-          },
-          itemStyle: {
-            shadowBlur: 10,
-
-            color: "rgba(62,163,128)",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-
-          data: [
-            2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3,
-          ],
-        },
-
-        {
-          name: "Temperature",
-          type: "line",
-          tooltip: {
-            valueFormatter: function (value) {
-              return value;
-            },
-          },
-          itemStyle: {
-            shadowBlur: 10,
-
-            color: "black",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-          data: [
-            2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2,
-          ],
-        },
-      ],
+      series: series,
     };
 
     option && myChart.setOption(option);
@@ -89,7 +107,7 @@ const Chart = () => {
     return () => {
       myChart.dispose();
     };
-  }, []);
+  }, [data]);
 
   return (
     <div className="w-[100%] flex flex-col   max-lg:hidden">

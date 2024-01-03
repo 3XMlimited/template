@@ -5,7 +5,7 @@ import React from "react";
 import * as echarts from "echarts";
 import { useEffect } from "react";
 
-const Chart = () => {
+const Chart = ({ date, data }) => {
   let results = [];
 
   useEffect(() => {
@@ -24,6 +24,24 @@ const Chart = () => {
       data3.push(+(Math.random() + 0.3).toFixed(2));
       data4.push(+Math.random().toFixed(2));
     }
+    let series = [];
+    data?.map((d, i) => {
+      let color = i % 2 === 0 ? "rgb(72,99,156)" : "rgb(72,99,156,0.8)";
+      series.push({
+        name: d.name,
+        type: "bar",
+        stack: "one",
+        emphasis: emphasisStyle,
+        itemStyle: {
+          shadowBlur: 10,
+          // normal: { color: "blue" },
+          color: color,
+          shadowColor: "rgba(0,0,0,0.3)",
+        },
+        data: d.data,
+      });
+    });
+
     var emphasisStyle = {
       itemStyle: {
         shadowBlur: 10,
@@ -49,7 +67,7 @@ const Chart = () => {
       },
       tooltip: {},
       xAxis: {
-        data: xAxisData,
+        data: date,
         // name: "X Axis",
         axisLine: { onZero: true },
         splitLine: { show: false },
@@ -63,60 +81,61 @@ const Chart = () => {
         bottom: 0,
       },
 
-      series: [
-        {
-          name: "bar",
-          type: "bar",
-          stack: "one",
-          emphasis: emphasisStyle,
-          itemStyle: {
-            shadowBlur: 10,
-            // normal: { color: "blue" },
-            color: "rgb(72,99,156)",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-          data: data1,
-        },
-        {
-          name: "bar2",
-          type: "bar",
-          stack: "one",
-          emphasis: emphasisStyle,
-          itemStyle: {
-            shadowBlur: 10,
-            // normal: { color: "blue" },
-            color: "rgba(72,99,156,0.8)",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-          data: data2,
-        },
-        {
-          name: "bar3",
-          type: "bar",
-          stack: "one",
-          emphasis: emphasisStyle,
-          itemStyle: {
-            shadowBlur: 10,
-            // normal: { color: "blue" },
-            color: "rgb(72,99,156)",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-          data: data3,
-        },
-        {
-          name: "bar4",
-          type: "bar",
-          stack: "one",
-          emphasis: emphasisStyle,
-          itemStyle: {
-            shadowBlur: 10,
-            // normal: { color: "blue" },
-            color: "rgba(72,99,156,0.8)",
-            shadowColor: "rgba(0,0,0,0.3)",
-          },
-          data: data4,
-        },
-      ],
+      // series: [
+      //   {
+      //     name: "bar",
+      //     type: "bar",
+      //     stack: "one",
+      //     emphasis: emphasisStyle,
+      //     itemStyle: {
+      //       shadowBlur: 10,
+      //       // normal: { color: "blue" },
+      //       color: "rgb(72,99,156)",
+      //       shadowColor: "rgba(0,0,0,0.3)",
+      //     },
+      //     data: data1,
+      //   },
+      //   {
+      //     name: "bar2",
+      //     type: "bar",
+      //     stack: "one",
+      //     emphasis: emphasisStyle,
+      //     itemStyle: {
+      //       shadowBlur: 10,
+      //       // normal: { color: "blue" },
+      //       color: "rgba(72,99,156,0.8)",
+      //       shadowColor: "rgba(0,0,0,0.3)",
+      //     },
+      //     data: data2,
+      //   },
+      //   {
+      //     name: "bar3",
+      //     type: "bar",
+      //     stack: "one",
+      //     emphasis: emphasisStyle,
+      //     itemStyle: {
+      //       shadowBlur: 10,
+      //       // normal: { color: "blue" },
+      //       color: "rgb(72,99,156)",
+      //       shadowColor: "rgba(0,0,0,0.3)",
+      //     },
+      //     data: data3,
+      //   },
+      //   {
+      //     name: "bar4",
+      //     type: "bar",
+      //     stack: "one",
+      //     emphasis: emphasisStyle,
+      //     itemStyle: {
+      //       shadowBlur: 10,
+      //       // normal: { color: "blue" },
+      //       color: "rgba(72,99,156,0.8)",
+      //       shadowColor: "rgba(0,0,0,0.3)",
+      //     },
+      //     data: data4,
+      //   },
+      // ],
+      series: series,
       itemStyle: {
         color: "blue",
       },
@@ -142,7 +161,7 @@ const Chart = () => {
     return () => {
       myChart.dispose();
     };
-  }, []);
+  }, [date]);
 
   return (
     <div className="  h-full w-[100%]   ">

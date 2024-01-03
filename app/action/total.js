@@ -2,9 +2,10 @@
 import moment from "moment";
 import { connectToDB } from "@/utils/database";
 import Emails from "@/models/email";
+import Results from "@/models/result";
 import FormChart from "@/components/forms/FormChart";
 
-export const FormsTotal = async () => {
+export const FormsTotal = async ({}) => {
   var getDaysArray = function (start, end) {
     for (
       var arr = [], dt = new Date(start);
