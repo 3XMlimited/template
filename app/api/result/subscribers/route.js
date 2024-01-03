@@ -2,8 +2,9 @@
 import { connectToDB } from "@/utils/database";
 import moment from "moment";
 import Results from "@/models/result";
+import Forms from "@/models/forms";
+import Emails from "@/models/email";
 import { getDaysArray } from "@/utils/utils";
-import { Result } from "postcss";
 
 export const POST = async (req) => {
   const body = await req.json();
@@ -11,6 +12,41 @@ export const POST = async (req) => {
 
   try {
     await connectToDB();
+
+    const data = await Results.find(rules);
+    return new Response(JSON.stringify(data), { status: 201 });
+  } catch (error) {
+    console.log(error);
+    return new Response("Failed to get the result", { status: 500 });
+  }
+};
+
+export const PATCH = async (req) => {
+  const body = await req.json();
+  const { rules } = await body;
+
+  try {
+    await connectToDB();
+    const data = { forms: [] };
+    const forms = await Forms.find({});
+    forms.map((f) => data.forms.push({ id: f.id, name: f.name }));
+    data.total_forms = forms.length;
+    data.new_subscriptions = 0;
+    for (let i = 0; i < data.forms.length; i++) {
+      const element = data.forms[i];
+      const subscriptions = await Emails.find({
+        id: element.id,
+        date: moment().format("YYYY-MM-DD"),
+      });
+      element.subscriptions = subscriptions.length;
+      data.new_subscriptions += subscriptions.length;
+    }
+    const lastDateResult = await Results.findOne({
+      date: moment().subtract(1, "days").format("YYYY-MM-DD"),
+    });
+    data.total_subscriptions =
+      lastDateResult.total_subscriptions + data.new_subscriptions;
+
     // const data = {
     //   total_subscriptions: 996,
     //   total_forms: 6,
@@ -49,24 +85,10 @@ export const POST = async (req) => {
     //   date: "2024-01-02",
     // };
     // const newUser = await Results.create(data);
-    const data = await Results.find(rules);
+    console.log(data);
     return new Response(JSON.stringify(data), { status: 201 });
   } catch (error) {
     console.log(error);
     return new Response("Failed to get the result", { status: 500 });
-  }
-};
-
-export const PATCH = async (req) => {
-  const body = await req.json();
-  const { rules } = await body;
-
-  try {
-    await connectToDB();
-
-    const result = await Emails.find(rules);
-    return new Response(JSON.stringify(result, { status: 200 }));
-  } catch (error) {
-    return new Response("Failed to find data", { status: 200 });
   }
 };

@@ -29,10 +29,13 @@ export const GET = async (req, { params }) => {
       let form = e.forms.filter((f) => f.id === id);
       total_subscriptions.push(form[0]?.subscriptions | 0);
     });
+    let today_emails = await Emails.find({
+      date: moment().format("YYYY-MM-DD"),
+    });
 
     return new Response(
       JSON.stringify({
-        today: total_subscriptions[total_subscriptions.length - 1],
+        today: today_emails.length,
         total_subscriptions: total_subscriptions.reduce((acc, b) => acc + b, 0),
       }),
       { status: 201 }

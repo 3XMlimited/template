@@ -90,7 +90,7 @@ const FormChart = ({ sum }) => {
           <ul className="p-0 m-0 flex  ml-[20px]">
             <li className="text-[#aaa] text-[14px] text-left list-none uppercase pl-0">
               <span className="text-[30px] block text-[#555] leading-[40px] font-medium">
-                {sum.today}
+                {sum?.today}
               </span>
               Today
             </li>
