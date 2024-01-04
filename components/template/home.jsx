@@ -125,7 +125,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
                   `}
               >
                 {template.forms
-                  ? forms.find((form) => form._id === template.forms)?.name
+                  ? forms.find((form) => form.id === template.forms)?.name
                   : "Select forms"}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
