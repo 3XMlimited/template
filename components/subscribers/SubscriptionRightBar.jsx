@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Papa from "papaparse";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -14,7 +15,17 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import moment from "moment";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
   // export csv
   const [name, setName] = useState("");
@@ -31,6 +42,18 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
 
   // add new subscribers
   const [newSubscriber, setNewSubscriber] = useState({
+    name: "",
+    email: "",
+  });
+
+  //import columns name state
+  const [columnsName, setColumnsName] = useState([]);
+
+  //file data
+  const [csvFileData, setFileData] = useState([]);
+
+  //filtered columns
+  const [selectedColumns, setSelectedColumns] = useState({
     name: "",
     email: "",
   });
@@ -54,6 +77,7 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
     setRules(rules);
     setEmails(data);
   };
+
   const fetchFormList = async () => {
     const response = await fetch("/api/form", {
       method: "GET",
@@ -65,6 +89,19 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
 
     setForms(data);
   };
+
+  const fetchLastDate = async () => {
+    const response = await fetch("/api/result/subscribers", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    console.log(data);
+  };
+
   // add new subscription
   const fetchSave = async () => {
     if (
@@ -81,6 +118,7 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
           forms: selectedForms,
           name: newSubscriber.name,
           email: newSubscriber.email,
+          mode: "single",
         }),
       });
       const result = await response.json();
@@ -88,9 +126,73 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
       //   setRules({ date: moment().format("YYYY-MM-DD") });
     }
   };
+  // add new subscription from csv
+
+  const fetchSaveCsv = async () => {
+    if (
+      selectedColumns.name !== "" &&
+      selectedColumns.email !== "" &&
+      selectedForms.length > 0 &&
+      csvFileData.length > 0
+    ) {
+      const filterData = [];
+      csvFileData.map((r) => {
+        if (r[selectedColumns.name] !== "" && r[selectedColumns.email] !== "") {
+          filterData.push({
+            name: r[selectedColumns.name],
+            email: r[selectedColumns.email],
+          });
+        }
+      });
+      console.log(filterData);
+      // const response = await fetch("api/subscribers", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     forms: selectedForms,
+      //     data: filterData,
+      //     mode: "csv",
+      //   }),
+      // });
+      // const result = await response.json();
+      // await fetchData();
+      //   setRules({ date: moment().format("YYYY-MM-DD") });
+    } else {
+      return;
+    }
+  };
+
+  // fetch save ss
+
+  // import csv file
+  const handleImport = (e) => {
+    const csvFile = e.target.files[0];
+    Papa.parse(csvFile, {
+      skipEmptyLines: true,
+      header: true,
+      complete: function (results) {
+        console.log("Finished", results.data);
+        if (Object.keys(results.data[0]).includes("")) {
+          alert(
+            "columns header can't not be empty, please check your csv file!"
+          );
+          setAddAction("");
+          return;
+        }
+        setColumnsName(Object.keys(results.data[0]));
+        setFileData(results.data);
+      },
+    });
+
+    setAddAction("import");
+  };
   useEffect(() => {
     fetchFormList();
+    // fetchLastDate();
   }, []);
+  console.log("column", columnsName);
   return (
     <div className="bg-gray-100 md:order-1 lg:order-2 ml-[9px] px-[21px]  pt-6 pb-6 md:pb-0 lg:max-w-sm">
       <section>
@@ -276,7 +378,7 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
                         </svg>
                         Add a single subscriber
                       </button>
-                      <button
+                      {/* <button
                         className="flex flex-col items-center justify-center py-8 px-4 rounded-sm bg-gray-50 hover:bg-gray-100 text-sm font-semibold transition transform duration-100 hover:scale-105"
                         ng-click="edit('import')"
                         onClick={() => setAddAction("import")}
@@ -295,8 +397,187 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
                           <path d="M19.699 14.654a.75.75 0 0 0 0 1.5h.801c.967 0 1.75.783 1.75 1.75V19a.75.75 0 0 0 1.5 0v-1.096a3.25 3.25 0 0 0-3.25-3.25h-.801zM3.5 16.154a1.75 1.75 0 0 0-1.75 1.75V19a.75.75 0 0 1-1.5 0v-1.096a3.25 3.25 0 0 1 3.25-3.25h.801a.75.75 0 0 1 0 1.5H3.5zm6.66-3.005a4.25 4.25 0 0 0-4.25 4.25V19a.75.75 0 0 0 1.5 0v-1.601a2.75 2.75 0 0 1 2.75-2.75h3.679a2.75 2.75 0 0 1 2.75 2.75V19a.75.75 0 0 0 1.5 0v-1.601a4.25 4.25 0 0 0-4.25-4.25H10.16z"></path>
                         </svg>
                         Import a CSV
-                      </button>
+                      </button> */}
+                      <div className="flex flex-col items-center justify-center py-8 px-4 rounded-sm bg-gray-50 hover:bg-gray-100 text-sm font-semibold transition transform duration-100 hover:scale-105">
+                        <label
+                          htmlFor="import_csv"
+                          className=" text-center justify-center"
+                        >
+                          <svg
+                            className="w-8 h-8 mb-2 ml-8"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M9.267 5.382a3.865 3.865 0 1 1 5.466 5.466 3.865 3.865 0 0 1-5.466-5.466zm1.06 1.06a2.365 2.365 0 1 1 3.345 3.346 2.365 2.365 0 0 1-3.344-3.345zm10.996 2.551a2.773 2.773 0 1 0-3.922 3.922 2.773 2.773 0 0 0 3.922-3.922zm-2.861 1.06a1.273 1.273 0 1 1 1.8 1.801 1.273 1.273 0 0 1-1.8-1.8zM2.677 8.993A2.773 2.773 0 1 1 6.6 12.915a2.773 2.773 0 0 1-3.922-3.922zm2.861 1.06a1.273 1.273 0 1 0-1.8 1.801 1.273 1.273 0 0 0 1.8-1.8z"
+                              clip-rule="evenodd"
+                            ></path>
+                            <path d="M19.699 14.654a.75.75 0 0 0 0 1.5h.801c.967 0 1.75.783 1.75 1.75V19a.75.75 0 0 0 1.5 0v-1.096a3.25 3.25 0 0 0-3.25-3.25h-.801zM3.5 16.154a1.75 1.75 0 0 0-1.75 1.75V19a.75.75 0 0 1-1.5 0v-1.096a3.25 3.25 0 0 1 3.25-3.25h.801a.75.75 0 0 1 0 1.5H3.5zm6.66-3.005a4.25 4.25 0 0 0-4.25 4.25V19a.75.75 0 0 0 1.5 0v-1.601a2.75 2.75 0 0 1 2.75-2.75h3.679a2.75 2.75 0 0 1 2.75 2.75V19a.75.75 0 0 0 1.5 0v-1.601a4.25 4.25 0 0 0-4.25-4.25H10.16z"></path>
+                          </svg>
+                          Import a CSV
+                        </label>
+
+                        <Input
+                          id="import_csv"
+                          type="file"
+                          className="hidden"
+                          accept={
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv "
+                          }
+                          onChange={handleImport}
+                        />
+                      </div>
                     </div>
+                  </DialogDescription>
+                </DialogHeader>
+              )}
+              {addAction === "import" && (
+                <DialogHeader>
+                  <DialogTitle className="text-[24px]">
+                    Import Subscribers
+                  </DialogTitle>
+
+                  <DialogDescription>
+                    <div className="grid gap-4 py-4">
+                      {columnsName.length > 1 && (
+                        <>
+                          <div className="grid grid-cols-7 items-center gap-4">
+                            <Label htmlFor="name" className="text-left">
+                              Name
+                            </Label>
+                            <Select
+                              onValueChange={(e) =>
+                                setSelectedColumns((prev) => ({
+                                  ...prev,
+                                  name: e,
+                                }))
+                              }
+                            >
+                              <SelectTrigger className="col-span-6">
+                                <SelectValue placeholder="Select name columns" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {columnsName?.map((col) => (
+                                    <SelectItem value={col}>{col}</SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="grid grid-cols-7 items-center gap-4">
+                            <Label htmlFor="email" className="text-left">
+                              Email
+                            </Label>
+                            <Select
+                              onValueChange={(e) =>
+                                setSelectedColumns((prev) => ({
+                                  ...prev,
+                                  email: e,
+                                }))
+                              }
+                            >
+                              <SelectTrigger className="col-span-6">
+                                <SelectValue placeholder="Select email columns" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {columnsName?.map((col) => (
+                                    <SelectItem value={col}>{col}</SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </>
+                      )}
+
+                      <div className="grid grid-cols-8 items-center gap-4  ">
+                        {/* <div className="col-span-1"></div> */}
+                        <div className="col-span-8 border-2 border-gray-200 rounded-md h-full ">
+                          {/* title */}
+                          <div className=" flex justify-between p-2 border-b-2 text-[16px]">
+                            <p className="text-cyan-900">
+                              Include these subscribers
+                            </p>
+                            <p className="text-gray-400 italic">
+                              {selectedForms.length | "No"} sources selected
+                            </p>
+                          </div>
+                          <div className=" bg-[#ddd] text-[12px]">
+                            <div
+                              className="text-cyan-800 p-2 cursor-pointer"
+                              onClick={() => setShowFormLabel((prev) => !prev)}
+                            >
+                              Forms
+                              <span className="ml-2  text-gray-400 italic">
+                                {selectedForms.length | 0} of {forms.length | 0}{" "}
+                                selected
+                              </span>{" "}
+                            </div>
+                            {showFormLabel && (
+                              <div className=" bg-white ">
+                                {forms?.map((form) => (
+                                  <div
+                                    className="flex items-center space-x-2 ml-4 py-1 border-y border-gray-100 "
+                                    htmlFor={form._id}
+                                  >
+                                    <Checkbox
+                                      id={form._id}
+                                      checked={selectedForms
+                                        .map((f) => f.id)
+                                        .includes(form._id)}
+                                      onCheckedChange={(e) =>
+                                        e
+                                          ? setSelectedForms((prev) => [
+                                              ...prev,
+                                              { form: form.name, id: form._id },
+                                            ])
+                                          : setSelectedForms((prev) =>
+                                              prev.filter(
+                                                (r) => r.id !== form._id
+                                              )
+                                            )
+                                      }
+                                    />
+                                    <label
+                                      htmlFor={form._id}
+                                      className="text-black text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    >
+                                      {form.name}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button
+                        variant={"outline"}
+                        onClick={() => setAddAction("")}
+                      >
+                        Back
+                      </Button>
+
+                      <Button
+                        type="submit"
+                        onClick={fetchSaveCsv}
+                        disabled={
+                          !(
+                            selectedColumns.name !== "" &&
+                            selectedColumns.email !== "" &&
+                            selectedForms.length > 0
+                          )
+                        }
+                      >
+                        <DialogClose>Save changes</DialogClose>
+                      </Button>
+                    </DialogFooter>
                   </DialogDescription>
                 </DialogHeader>
               )}
@@ -317,3 +598,5 @@ const SubscriptionRightBar = ({ setEmails, setRules, fetchData }) => {
 };
 
 export default SubscriptionRightBar;
+
+80 - 8 / 8;

@@ -22,8 +22,8 @@ export const POST = async (req) => {
 };
 
 export const PATCH = async (req) => {
-  const body = await req.json();
-  const { rules } = await body;
+  // const body = await req.json();
+  // const { rules } = await body;
 
   try {
     await connectToDB();
@@ -36,17 +36,17 @@ export const PATCH = async (req) => {
       const element = data.forms[i];
       const subscriptions = await Emails.find({
         id: element.id,
-        date: moment().format("YYYY-MM-DD"),
+        date: moment().subtract(1, "days").format("YYYY-MM-DD"),
       });
       element.subscriptions = subscriptions.length;
       data.new_subscriptions += subscriptions.length;
     }
     const lastDateResult = await Results.findOne({
-      date: moment().subtract(1, "days").format("YYYY-MM-DD"),
+      date: moment().subtract(2, "days").format("YYYY-MM-DD"),
     });
     data.total_subscriptions =
       lastDateResult.total_subscriptions + data.new_subscriptions;
-
+    data.date = moment().subtract(1, "days").format("YYYY-MM-DD");
     // const data = {
     //   total_subscriptions: 996,
     //   total_forms: 6,
@@ -86,6 +86,7 @@ export const PATCH = async (req) => {
     // };
     // const newUser = await Results.create(data);
     console.log(data);
+    await Results.create(data);
     return new Response(JSON.stringify(data), { status: 201 });
   } catch (error) {
     console.log(error);

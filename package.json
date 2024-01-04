@@ -52,6 +52,7 @@
     "moment": "^2.30.1",
     "mongoose": "^8.0.0",
     "next": "14.0.1",
+    "papaparse": "^5.4.1",
     "react": "^18",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",

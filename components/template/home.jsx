@@ -44,7 +44,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
 
   //FUNCTION: Get Convertkit form ID
   const fetchForms = async () => {
-    const response = await fetch("/api/form", {
+    const response = await fetch("/api/emailOctopus/list", {
       method: "GET",
       timeout: 30000,
       headers: {
@@ -53,7 +53,7 @@ const Home = ({ template, set_template, setStep, detail }) => {
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log("data", data);
     // console.log("forms", data);
     setForms(data);
   };
@@ -138,12 +138,12 @@ const Home = ({ template, set_template, setStep, detail }) => {
                   {forms?.map((form, i) => (
                     <CommandItem
                       // value={template.forms}
-                      key={form._id}
+                      key={form.id}
                       onSelect={() => {
                         // console.log("form", form);
                         set_template((prev) => ({
                           ...prev,
-                          forms: form._id,
+                          forms: form.id,
                         }));
                         // form.setValue("form", form.id);
                       }}
